@@ -14,7 +14,7 @@ interface AccountDao {
     fun getAllFlow(): Flow<List<AccountEntity>>
 
     @Query("SELECT * FROM accounts WHERE id = :id LIMIT 1")
-    suspend fun getById(id: String): AccountEntity?
+    suspend fun getById(id: String?): AccountEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(account: AccountEntity)

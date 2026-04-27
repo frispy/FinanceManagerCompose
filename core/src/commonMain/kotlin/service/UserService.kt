@@ -1,5 +1,6 @@
 package service
 
+import data.entity.toEntity
 import factory.GenericFactory
 import model.params.UserCreationParams
 import model.user.User
@@ -24,6 +25,12 @@ class UserService(
             return user
         }
         return null
+    }
+
+    suspend fun deleteUser(user: User): Boolean {
+        val user = userRepository.findByLogin(user.login) ?: return false
+        userRepository.delete(user)
+        return true
     }
 
     suspend fun changePassword(login: String, oldPassword: String, newPassword: String): Boolean {

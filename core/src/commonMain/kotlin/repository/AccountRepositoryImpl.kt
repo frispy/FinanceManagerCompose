@@ -12,7 +12,7 @@ class AccountRepositoryImpl(private val dao: AccountDao): AccountRepository {
         return dao.getAllFlow().map { list -> list.map { it.toDomain() } }
     }
 
-    override suspend fun getById(id: String): Account? {
+    override suspend fun getById(id: String?): Account? {
         return dao.getById(id)?.toDomain()
     }
 

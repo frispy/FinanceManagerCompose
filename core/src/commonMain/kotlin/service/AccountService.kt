@@ -17,34 +17,42 @@ class AccountService (
         accountRepository.add(account)
         return true
     }
-
-    suspend fun getAccountCurrency(accountId: String?): CurrencyType? {
-        return accountRepository.getById(accountId)?.currency
-    }
-
-    // remove money
-    suspend fun withdraw(accountId: String?, amount: Long): Boolean {
-        val account = accountRepository.getById(accountId) ?: return false
-
-        if (amount <= 0 || account.balance < amount) {
-            return false
-        }
-
-        account.updateBalance(account.balance - amount)
+    suspend fun updateAccount(account: Account): Boolean {
         accountRepository.update(account)
         return true
     }
 
-    // add money
-    suspend fun deposit(accountId: String?, amount: Long): Boolean {
+    suspend fun getAccountCurrency(accountId: String?): CurrencyType? {
+        return accountRepository.getById(accountId ?: "")?.currency
+    }
+
+    // remove money
+    suspend fun withdraw(accountId: String?, amount: Long): Boolean {
+        if (accountId == null) return false
         val account = accountRepository.getById(accountId) ?: return false
 
         if (amount <= 0) {
             return false
         }
 
-        account.updateBalance(account.balance + amount)
-        accountRepository.update(account)
+        val updatedAccount = account.updateBalance(account.balance - amount)
+
+        accountRepository.update(updatedAccount)
+        return true
+    }
+
+    // add money
+    suspend fun deposit(accountId: String?, amount: Long): Boolean {
+        if (accountId == null) return false
+        val account = accountRepository.getById(accountId) ?: return false
+
+        if (amount <= 0) {
+            return false
+        }
+
+        val updatedAccount = account.updateBalance(account.balance + amount)
+
+        accountRepository.update(updatedAccount)
         return true
     }
 
@@ -54,7 +62,6 @@ class AccountService (
 
     fun getTotalBalanceFlow(userId: String): Flow<Long> {
         return accountRepository.getAllAccountsFlow().map { accountsList ->
-            // get total sum of accounts
             accountsList.filter { it.userId == userId }.sumOf { it.balance }
         }
     }

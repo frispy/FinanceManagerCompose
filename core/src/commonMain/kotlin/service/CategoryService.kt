@@ -1,6 +1,7 @@
 package service
 
 import kotlinx.coroutines.flow.Flow
+import model.enum.TransactionType
 import model.transaction.TransactionCategory
 import repository.CategoryRepository
 import kotlin.uuid.ExperimentalUuidApi
@@ -10,22 +11,28 @@ class CategoryService(
     private val categoryRepository: CategoryRepository,
 ) {
     @OptIn(ExperimentalUuidApi::class)
-    suspend fun createCategory(name: String): TransactionCategory? {
-        // check for duplicates
+    suspend fun createCategory(name: String, type: TransactionType, iconName: String): TransactionCategory? {
+        // check for duplicates by name
         val existing = categoryRepository.findByName(name)
         if (existing != null) {
             return null
         }
 
-        // generate new id and object
+        // generate new id and object with proper fields
         val newCategory = TransactionCategory(
             id = Uuid.random().toString(),
-            name = name
+            name = name,
+            type = type,
+            iconName = iconName
         )
 
         // save to file
         categoryRepository.add(newCategory)
         return newCategory
+    }
+
+    suspend fun updateCategory(category: TransactionCategory) {
+        categoryRepository.update(category)
     }
 
     // fetch all stored categories

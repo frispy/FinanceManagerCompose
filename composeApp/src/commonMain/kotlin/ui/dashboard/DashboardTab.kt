@@ -9,16 +9,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import model.account.Account
 import model.account.BankAccount
 import model.transaction.Transaction
+import model.transaction.TransactionCategory
+import ui.accounts.AccountsTab
+import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
 import viewmodel.DashboardScreenModel
 
@@ -29,11 +34,12 @@ object DashboardTab : Tab {
 
     @Composable
     override fun Content() {
+        val tabNavigator = LocalTabNavigator.current
         val user = LocalCurrentUser.current
         val screenModel = rememberScreenModel {
             DashboardScreenModel(
                 userId = user.id,
-                accountRepository = AppDependencies.accountRepository, // Assuming these exist in AppDependencies
+                accountRepository = AppDependencies.accountRepository,
                 transactionRepository = AppDependencies.transactionRepository,
                 categoryRepository = AppDependencies.categoryRepository
             )
@@ -52,13 +58,16 @@ object DashboardTab : Tab {
             Text("My Accounts", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
 
-            // horizontal row for accounts
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 if (state.topAccounts.isEmpty()) {
                     Text("No accounts yet. Create one!", color = Color.Gray)
                 } else {
                     state.topAccounts.forEach { account ->
-                        AccountCard(account, modifier = Modifier.weight(1f))
+                        AccountCard(
+                            account = account,
+                            modifier = Modifier.weight(1f),
+                            onClick = { tabNavigator.current = AccountsTab } // navigation
+                        )
                     }
                 }
             }
@@ -66,7 +75,6 @@ object DashboardTab : Tab {
             Spacer(modifier = Modifier.height(32.dp))
 
             Row(modifier = Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                // recent transactions block
                 Card(
                     modifier = Modifier.weight(1.5f).fillMaxHeight(),
                     backgroundColor = MaterialTheme.colors.surface,
@@ -76,7 +84,10 @@ object DashboardTab : Tab {
                     Column(modifier = Modifier.padding(24.dp)) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text("Recent Transactions", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
-                            Button(onClick = {}, colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)) {
+                            Button(
+                                onClick = { tabNavigator.current = TransactionsTab }, // navigation
+                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                            ) {
                                 Text("View all", color = Color.White)
                             }
                         }
@@ -86,14 +97,13 @@ object DashboardTab : Tab {
                         } else {
                             LazyColumn {
                                 items(state.recentTransactions) { tx ->
-                                    TransactionRow(tx)
+                                    TransactionRow(tx, state.activeCategories) // pass categories for icons
                                 }
                             }
                         }
                     }
                 }
 
-                // custom categories block
                 Card(
                     modifier = Modifier.weight(1f).fillMaxHeight(),
                     backgroundColor = MaterialTheme.colors.surface,
@@ -108,18 +118,14 @@ object DashboardTab : Tab {
                         if (state.activeCategories.isEmpty()) {
                             Text("No categories yet.", color = Color.Gray)
                         } else {
-                            // flow layout is tricky in pure basic compose without accompanist,
-                            // we'll just use a column of simple text items for simplicity here
                             LazyColumn {
                                 items(state.activeCategories) { cat ->
-                                    // extract pure name if we encoded type/icon inside
-                                    val pureName = cat.name.split("|").first()
                                     Card(
                                         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                                         backgroundColor = Color.LightGray.copy(alpha = 0.5f),
                                         elevation = 0.dp
                                     ) {
-                                        Text(pureName, modifier = Modifier.padding(12.dp))
+                                        Text(cat.name, modifier = Modifier.padding(12.dp))
                                     }
                                 }
                             }
@@ -131,7 +137,7 @@ object DashboardTab : Tab {
     }
 
     @Composable
-    fun AccountCard(account: Account, modifier: Modifier = Modifier) {
+    fun AccountCard(account: Account, modifier: Modifier = Modifier, onClick: () -> Unit) {
         Card(
             modifier = modifier.height(160.dp),
             backgroundColor = MaterialTheme.colors.surface,
@@ -141,12 +147,12 @@ object DashboardTab : Tab {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.SpaceBetween) {
                 Column {
                     Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
-                    val accName = if (account is BankAccount) account.bankName else "Account"
+                    val accName = if (account is BankAccount) account.bankName else account.name
                     Text(accName, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
                 }
                 Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
                 Button(
-                    onClick = {},
+                    onClick = onClick,
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -157,13 +163,21 @@ object DashboardTab : Tab {
     }
 
     @Composable
-    fun TransactionRow(tx: Transaction) {
+    fun TransactionRow(tx: Transaction, categories: List<TransactionCategory>) {
+        val category = categories.find { it.id == tx.base.categoryId }
+        val iconName = category?.iconName ?: "Category" // get icon
+
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
-                Box(modifier = Modifier.size(40.dp).background(Color.White, RoundedCornerShape(8.dp)))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier.size(40.dp).background(Color.White, RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(ui.utils.IconMapper.getIconByName(iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)

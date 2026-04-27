@@ -117,7 +117,7 @@ class TransactionService(
     }
 
     // safely revert history transaction
-    suspend fun deleteTransactionHistory(transactionId: String): Boolean {
+    suspend fun deleteTransactionRecord(transactionId: String): Boolean {
         val transaction = transactionRepository.getById(transactionId) ?: return false
 
         return try {

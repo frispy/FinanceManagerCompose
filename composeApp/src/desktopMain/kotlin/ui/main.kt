@@ -20,6 +20,7 @@ fun main() {
         name = dbFile.absolutePath,
     )
         .setDriver(BundledSQLiteDriver()) // KMP Room driver for desktop
+        .fallbackToDestructiveMigration(dropAllTables = true)
         .build()
 
     // 3. pass database to DI container

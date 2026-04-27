@@ -14,7 +14,6 @@ import ui.theme.LocalCurrentUser
 import viewmodel.SettingsScreenModel
 
 // taking both theme and logout callbacks in constructor
-// to keep navigation safe from context leaks
 class SettingsTab(
     private val onThemeChange: (Boolean) -> Unit,
     private val onLogout: () -> Unit
@@ -28,11 +27,7 @@ class SettingsTab(
     override fun Content() {
         val user = LocalCurrentUser.current
         val screenModel = rememberScreenModel {
-            SettingsScreenModel(
-                AppDependencies.accountRepository,
-                AppDependencies.transactionRepository,
-                AppDependencies.categoryRepository
-            )
+            SettingsScreenModel(AppDependencies.userService)
         }
 
         Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
@@ -55,20 +50,21 @@ class SettingsTab(
             Text("Danger Zone", style = MaterialTheme.typography.h6, color = Color.Red)
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                "Warning: Core DAO does not support user deletion. This will only clear your accounts and transactions data.",
+                "Warning: This will permanently delete your user profile and all associated data inside.",
                 color = Color.Gray,
                 style = MaterialTheme.typography.body2
             )
             Spacer(modifier = Modifier.height(8.dp))
             Button(
                 onClick = {
-                    screenModel.clearUserData(user.id)
-                    // after wiping data, execute safe logout callback
-                    onLogout()
+                    screenModel.deleteUser(user) {
+                        // safely log out once delete is complete
+                        onLogout()
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
             ) {
-                Text("Clear All My Data", color = Color.White)
+                Text("Delete My Profile", color = Color.White)
             }
         }
     }

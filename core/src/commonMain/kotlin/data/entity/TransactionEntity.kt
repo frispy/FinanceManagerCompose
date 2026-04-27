@@ -48,7 +48,7 @@ import model.transaction.TransactionBase
 data class TransactionEntity(
     @PrimaryKey val id: String,
     val userId: String,
-    val accountId: String,
+    val accountId: String?,
     val amount: Long,
     val currency: CurrencyType,
     val date: String,

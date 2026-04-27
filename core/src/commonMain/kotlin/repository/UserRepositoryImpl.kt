@@ -18,4 +18,8 @@ class UserRepositoryImpl(private val dao: UserDao): UserRepository {
     override suspend fun update(user: User) {
         dao.update(user.toEntity())
     }
+
+    override suspend fun delete(user: User) {
+        dao.delete(user.toEntity())
+    }
 }

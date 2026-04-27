@@ -16,10 +16,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import model.account.Account
 import model.account.BankAccount
+import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
 import viewmodel.AccountsScreenModel
 
@@ -30,8 +32,8 @@ object AccountsTab : Tab {
 
     @Composable
     override fun Content() {
-        // we use parent navigator to push full screen over the tabs
         val rootNavigator = LocalNavigator.current?.parent
+        val tabNavigator = LocalTabNavigator.current
         val user = LocalCurrentUser.current
         val screenModel = rememberScreenModel {
             AccountsScreenModel(user.id, AppDependencies.accountRepository)
@@ -39,7 +41,6 @@ object AccountsTab : Tab {
         val state by screenModel.state.collectAsState()
 
         Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
-            // header row with title and add button
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -69,7 +70,11 @@ object AccountsTab : Tab {
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(state.accounts) { account ->
-                        DetailedAccountCard(account)
+                        DetailedAccountCard(
+                            account = account,
+                            onEditClick = { rootNavigator?.push(EditAccountScreen(account.id)) },
+                            onHistoryClick = { tabNavigator.current = TransactionsTab }
+                        )
                     }
                 }
             }
@@ -77,7 +82,7 @@ object AccountsTab : Tab {
     }
 
     @Composable
-    fun DetailedAccountCard(account: Account) {
+    fun DetailedAccountCard(account: Account, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
         Card(
             modifier = Modifier.fillMaxWidth().height(400.dp),
             backgroundColor = MaterialTheme.colors.surface,
@@ -86,17 +91,14 @@ object AccountsTab : Tab {
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
                 Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
-                // in your current design note / name might be stored differently,
-                // but we display bank name or generic name as title
-                val accName = if (account is BankAccount) account.bankName else "Account"
+                val accName = if (account is BankAccount) account.bankName else account.name
                 Text(accName, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
 
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
 
                 Spacer(modifier = Modifier.height(16.dp))
-                // fallback text for now since note might be added later to the base account model
-                Text("Your custom description or note will be here...", color = Color.Gray, style = MaterialTheme.typography.body2)
+                Text(account.note.ifBlank { "No specific notes provided." }, color = Color.Gray, style = MaterialTheme.typography.body2)
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Text("Transactions", fontWeight = FontWeight.Bold)
@@ -108,13 +110,13 @@ object AccountsTab : Tab {
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(
-                        onClick = {},
+                        onClick = onHistoryClick,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                     ) {
                         Text("Full history", color = Color.White)
                     }
-                    OutlinedButton(onClick = {}) {
+                    OutlinedButton(onClick = onEditClick) {
                         Text("Edit", color = MaterialTheme.colors.primary)
                     }
                 }

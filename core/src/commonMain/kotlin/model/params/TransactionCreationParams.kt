@@ -10,7 +10,7 @@ sealed class TransactionCreationParams {
         val amount: Long,
         val currency: CurrencyType,
         val date: String,
-        val categoryId: String,
+        val categoryId: String?,
         val note: String
     )
 
