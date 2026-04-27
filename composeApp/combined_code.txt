@@ -1,0 +1,2836 @@
+--- ./build/generated/compose/resourceGenerator/kotlin/jvmMainResourceCollectors/financemanagercompose/composeapp/generated/resources/ActualResourceCollectors.kt ---
+@file:OptIn(org.jetbrains.compose.resources.InternalResourceApi::class)
+
+package financemanagercompose.composeapp.generated.resources
+
+import kotlin.OptIn
+import kotlin.String
+import kotlin.collections.Map
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.PluralStringResource
+import org.jetbrains.compose.resources.StringArrayResource
+import org.jetbrains.compose.resources.StringResource
+
+internal actual val Res.allDrawableResources: Map<String, DrawableResource> by lazy {
+  val map = mutableMapOf<String, DrawableResource>()
+  _collectJvmMainDrawable0Resources(map)
+  return@lazy map
+}
+
+internal actual val Res.allStringResources: Map<String, StringResource> by lazy {
+  val map = mutableMapOf<String, StringResource>()
+  return@lazy map
+}
+
+internal actual val Res.allStringArrayResources: Map<String, StringArrayResource> by lazy {
+  val map = mutableMapOf<String, StringArrayResource>()
+  return@lazy map
+}
+
+internal actual val Res.allPluralStringResources: Map<String, PluralStringResource> by lazy {
+  val map = mutableMapOf<String, PluralStringResource>()
+  return@lazy map
+}
+
+internal actual val Res.allFontResources: Map<String, FontResource> by lazy {
+  val map = mutableMapOf<String, FontResource>()
+  return@lazy map
+}
+-e 
+
+--- ./build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/app/financemanager/composeapp/generated/resources/ExpectResourceCollectors.kt ---
+package app.financemanager.composeapp.generated.resources
+
+import kotlin.String
+import kotlin.collections.Map
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.PluralStringResource
+import org.jetbrains.compose.resources.StringArrayResource
+import org.jetbrains.compose.resources.StringResource
+
+internal expect val Res.allDrawableResources: Map<String, DrawableResource>
+
+internal expect val Res.allStringResources: Map<String, StringResource>
+
+internal expect val Res.allStringArrayResources: Map<String, StringArrayResource>
+
+internal expect val Res.allPluralStringResources: Map<String, PluralStringResource>
+
+internal expect val Res.allFontResources: Map<String, FontResource>
+-e 
+
+--- ./build/generated/compose/resourceGenerator/kotlin/jvmMainResourceAccessors/financemanagercompose/composeapp/generated/resources/Drawable0.jvmMain.kt ---
+@file:OptIn(InternalResourceApi::class)
+
+package financemanagercompose.composeapp.generated.resources
+
+import kotlin.OptIn
+import kotlin.String
+import kotlin.collections.MutableMap
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.InternalResourceApi
+import org.jetbrains.compose.resources.ResourceContentHash
+import org.jetbrains.compose.resources.ResourceItem
+
+private const val MD: String =
+    "composeResources/financemanagercompose.composeapp.generated.resources/"
+
+@delegate:ResourceContentHash(379_089_144)
+internal val Res.drawable.compose_multiplatform: DrawableResource by lazy {
+      DrawableResource("drawable:compose_multiplatform", setOf(
+        ResourceItem(setOf(), "${MD}drawable/compose-multiplatform.xml", -1, -1),
+      ))
+    }
+
+@InternalResourceApi
+internal fun _collectJvmMainDrawable0Resources(map: MutableMap<String, DrawableResource>) {
+  map.put("compose_multiplatform", Res.drawable.compose_multiplatform)
+}
+-e 
+
+--- ./build/generated/compose/resourceGenerator/kotlin/commonResClass/app/financemanager/composeapp/generated/resources/Res.kt ---
+@file:OptIn(InternalResourceApi::class)
+@file:Suppress(
+  "RedundantVisibilityModifier",
+  "REDUNDANT_VISIBILITY_MODIFIER",
+)
+
+package app.financemanager.composeapp.generated.resources
+
+import kotlin.ByteArray
+import kotlin.OptIn
+import kotlin.String
+import kotlin.Suppress
+import org.jetbrains.compose.resources.InternalResourceApi
+import org.jetbrains.compose.resources.getResourceUri
+import org.jetbrains.compose.resources.readResourceBytes
+
+internal object Res {
+  /**
+   * Reads the content of the resource file at the specified path and returns it as a byte array.
+   *
+   * Example: `val bytes = Res.readBytes("files/key.bin")`
+   *
+   * @param path The path of the file to read in the compose resource's directory.
+   * @return The content of the file as a byte array.
+   */
+  public suspend fun readBytes(path: String): ByteArray = readResourceBytes("composeResources/app.financemanager.composeapp.generated.resources/" + path)
+
+  /**
+   * Returns the URI string of the resource file at the specified path.
+   *
+   * Example: `val uri = Res.getUri("files/key.bin")`
+   *
+   * @param path The path of the file in the compose resource's directory.
+   * @return The URI string of the file.
+   */
+  public fun getUri(path: String): String = getResourceUri("composeResources/app.financemanager.composeapp.generated.resources/" + path)
+
+  public object drawable
+
+  public object string
+
+  public object array
+
+  public object plurals
+
+  public object font
+}
+-e 
+
+--- ./build/generated/compose/resourceGenerator/kotlin/desktopMainResourceCollectors/app/financemanager/composeapp/generated/resources/ActualResourceCollectors.kt ---
+@file:OptIn(org.jetbrains.compose.resources.InternalResourceApi::class)
+
+package app.financemanager.composeapp.generated.resources
+
+import kotlin.OptIn
+import kotlin.String
+import kotlin.collections.Map
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.PluralStringResource
+import org.jetbrains.compose.resources.StringArrayResource
+import org.jetbrains.compose.resources.StringResource
+
+internal actual val Res.allDrawableResources: Map<String, DrawableResource> by lazy {
+  val map = mutableMapOf<String, DrawableResource>()
+  return@lazy map
+}
+
+internal actual val Res.allStringResources: Map<String, StringResource> by lazy {
+  val map = mutableMapOf<String, StringResource>()
+  return@lazy map
+}
+
+internal actual val Res.allStringArrayResources: Map<String, StringArrayResource> by lazy {
+  val map = mutableMapOf<String, StringArrayResource>()
+  return@lazy map
+}
+
+internal actual val Res.allPluralStringResources: Map<String, PluralStringResource> by lazy {
+  val map = mutableMapOf<String, PluralStringResource>()
+  return@lazy map
+}
+
+internal actual val Res.allFontResources: Map<String, FontResource> by lazy {
+  val map = mutableMapOf<String, FontResource>()
+  return@lazy map
+}
+-e 
+
+--- ./src/desktopTest/kotlin/financemanager/ui/ComposeAppDesktopTest.kt ---
+package financemanager.ui
+
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class ComposeAppDesktopTest {
+
+    @Test
+    fun example() {
+        assertEquals(3, 1 + 2)
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/LoginScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import service.UserService
+
+data class LoginState(
+    val login: String = "",
+    val pass: String = "",
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+class LoginScreenModel(
+    private val userService: UserService
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(LoginState())
+    val state = _state.asStateFlow()
+
+    fun onLoginChanged(login: String) = _state.update { it.copy(login = login) }
+    fun onPasswordChanged(pass: String) = _state.update { it.copy(pass = pass) }
+
+    fun login(onSuccess: (model.user.User) -> Unit) {
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+
+            val user = userService.login(_state.value.login, _state.value.pass)
+
+            if (user != null) {
+                _state.update { it.copy(isLoading = false) }
+                onSuccess(user)
+            } else {
+                _state.update { it.copy(isLoading = false, error = "Invalid login or password") }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/EditAccountScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.account.Account
+import model.account.BankAccount
+import model.account.CashAccount
+import model.account.DepositAccount
+import repository.AccountRepository
+import service.AccountService
+
+data class EditAccountState(
+    val account: Account? = null,
+    val name: String = "",
+    val note: String = "",
+
+    // specific fields mapped
+    val bankName: String = "",
+    val cashLocation: String = "",
+    val dailyLimit: String = "",
+    val interestRate: String = "",
+
+    val isLoading: Boolean = true,
+    val error: String? = null
+)
+
+class EditAccountScreenModel(
+    private val accountId: String,
+    private val accountRepository: AccountRepository,
+    private val accountService: AccountService
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(EditAccountState())
+    val state = _state.asStateFlow()
+
+    init {
+        screenModelScope.launch {
+            val acc = accountRepository.getById(accountId)
+            if (acc != null) {
+                _state.update {
+                    it.copy(
+                        account = acc,
+                        name = acc.name,
+                        note = acc.note,
+                        bankName = if (acc is BankAccount) acc.bankName else "",
+                        cashLocation = if (acc is CashAccount) acc.cashLocation else "",
+                        dailyLimit = if (acc is CashAccount) acc.dailyLimit.toString() else "",
+                        interestRate = if (acc is DepositAccount) acc.interestRate.toString() else "",
+                        isLoading = false
+                    )
+                }
+            } else {
+                _state.update { it.copy(isLoading = false, error = "account not found") }
+            }
+        }
+    }
+
+    fun onNameChange(name: String) = _state.update { it.copy(name = name) }
+    fun onNoteChange(note: String) = _state.update { it.copy(note = note) }
+    fun onBankNameChange(bankName: String) = _state.update { it.copy(bankName = bankName) }
+    fun onCashLocationChange(location: String) = _state.update { it.copy(cashLocation = location) }
+    fun onDailyLimitChange(limit: String) = _state.update { it.copy(dailyLimit = limit) }
+    fun onInterestRateChange(rate: String) = _state.update { it.copy(interestRate = rate) }
+
+    fun updateAccount(onSuccess: () -> Unit) {
+        val st = _state.value
+        val acc = st.account ?: return
+
+        // apply fields based on class instance
+        val updatedAcc = when (acc) {
+            is BankAccount -> acc.copy(name = st.name, note = st.note, bankName = st.bankName)
+            is CashAccount -> acc.copy(name = st.name, note = st.note, cashLocation = st.cashLocation, dailyLimit = st.dailyLimit.toLongOrNull() ?: 0L)
+            is DepositAccount -> acc.copy(name = st.name, note = st.note, interestRate = st.interestRate.toDoubleOrNull() ?: 0.0)
+        }
+
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            accountService.updateAccount(updatedAcc)
+            _state.update { it.copy(isLoading = false) }
+            onSuccess()
+        }
+    }
+
+    fun deleteAccount(onSuccess: () -> Unit) {
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            accountService.deleteAccount(accountId)
+            onSuccess()
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/DashboardScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.account.Account
+import model.transaction.Transaction
+import model.transaction.TransactionCategory
+import repository.AccountRepository
+import repository.CategoryRepository
+import repository.TransactionRepository
+
+data class DashboardState(
+    val isLoading: Boolean = true,
+    val topAccounts: List<Account> = emptyList(),
+    val recentTransactions: List<Transaction> = emptyList(),
+    val activeCategories: List<TransactionCategory> = emptyList()
+)
+
+class DashboardScreenModel(
+    private val userId: String,
+    private val accountRepository: AccountRepository,
+    private val transactionRepository: TransactionRepository,
+    private val categoryRepository: CategoryRepository
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(DashboardState())
+    val state = _state.asStateFlow()
+
+    init {
+        loadDashboardData()
+    }
+
+    private fun loadDashboardData() {
+        screenModelScope.launch {
+            // observing flows allows real-time UI updates when DB changes
+            launch {
+                accountRepository.getAllAccountsFlow().collect { allAccs ->
+                    _state.update {
+                        it.copy(
+                            topAccounts = allAccs.filter { acc -> acc.userId == userId }.take(3),
+                            isLoading = false
+                        )
+                    }
+                }
+            }
+            launch {
+                transactionRepository.getAllTransactionsFlow().collect { allTrans ->
+                    _state.update {
+                        it.copy(recentTransactions = allTrans.filter { tr -> tr.base.userId == userId }.take(5))
+                    }
+                }
+            }
+            launch {
+                categoryRepository.getAllCategoriesFlow().collect { allCats ->
+                    _state.update { it.copy(activeCategories = allCats.take(6)) }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/AccountsScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.account.Account
+import repository.AccountRepository
+
+data class AccountsState(
+    val accounts: List<Account> = emptyList()
+)
+
+class AccountsScreenModel(
+    private val userId: String,
+    private val accountRepository: AccountRepository
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(AccountsState())
+    val state = _state.asStateFlow()
+
+    init {
+        screenModelScope.launch {
+            accountRepository.getAllAccountsFlow().collect { allAccs ->
+                _state.update { it.copy(accounts = allAccs.filter { acc -> acc.userId == userId }) }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/RegistrationScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.params.UserCreationParams
+import service.UserService
+
+data class RegistrationState(
+    val login: String = "",
+    val pass: String = "",
+    val confirmPass: String = "",
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+class RegistrationScreenModel(
+    private val userService: UserService
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(RegistrationState())
+    val state = _state.asStateFlow()
+
+    fun onLoginChanged(login: String) = _state.update { it.copy(login = login) }
+    fun onPasswordChanged(pass: String) = _state.update { it.copy(pass = pass) }
+    fun onConfirmPasswordChanged(pass: String) = _state.update { it.copy(confirmPass = pass) }
+
+    fun register(onSuccess: () -> Unit) {
+        val currentState = _state.value
+
+        if (currentState.login.isBlank() || currentState.pass.isBlank()) {
+            _state.update { it.copy(error = "Please fill all fields") }
+            return
+        }
+
+        if (currentState.pass != currentState.confirmPass) {
+            _state.update { it.copy(error = "Passwords don't match") }
+            return
+        }
+
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+
+            val success = userService.register(
+                UserCreationParams(
+                    login = currentState.login,
+                    pass = currentState.pass
+                )
+            )
+
+            if (success) {
+                _state.update { it.copy(isLoading = false) }
+                onSuccess()
+            } else {
+                _state.update {
+                    it.copy(isLoading = false, error = "User with this login already exists")
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/TransactionsScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.transaction.Transaction
+import model.transaction.TransactionCategory
+import repository.CategoryRepository
+import repository.TransactionRepository
+import service.TransactionService
+
+data class TransactionsState(
+    val transactions: List<Transaction> = emptyList(),
+    val categories: List<TransactionCategory> = emptyList()
+)
+
+class TransactionsScreenModel(
+    private val userId: String,
+    private val transactionRepository: TransactionRepository,
+    private val categoryRepository: CategoryRepository,
+    private val transactionService: TransactionService
+) : ScreenModel {
+    private val _state = MutableStateFlow(TransactionsState())
+    val state = _state.asStateFlow()
+
+    init {
+        screenModelScope.launch {
+            launch {
+                transactionRepository.getAllTransactionsFlow().collect { list ->
+                    _state.update { it.copy(transactions = list.filter { tr -> tr.base.userId == userId }) }
+                }
+            }
+            launch {
+                categoryRepository.getAllCategoriesFlow().collect { list ->
+                    _state.update { it.copy(categories = list) }
+                }
+            }
+        }
+    }
+
+    fun deleteTransaction(transactionId: String) {
+        screenModelScope.launch {
+            transactionService.deleteTransactionRecord(transactionId)
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/CreateAccountScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.enum.AccountType
+import model.enum.CurrencyType
+import model.params.AccountCreationParams
+import service.AccountService
+
+data class CreateAccountState(
+    val name: String = "",
+    val note: String = "",
+    val balance: String = "",
+    val currency: CurrencyType = CurrencyType.USD,
+    val accountType: AccountType = AccountType.BANK,
+
+    // specific fields
+    val bankName: String = "",
+    val cashLocation: String = "",
+    val dailyLimit: String = "",
+    val interestRate: String = "",
+
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+class CreateAccountScreenModel(
+    private val userId: String,
+    private val accountService: AccountService
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(CreateAccountState())
+    val state = _state.asStateFlow()
+
+    // basic fields updates
+    fun onNameChange(name: String) = _state.update { it.copy(name = name) }
+    fun onNoteChange(note: String) = _state.update { it.copy(note = note) }
+    fun onBalanceChange(balance: String) = _state.update { it.copy(balance = balance) }
+    fun onCurrencyChange(currency: CurrencyType) = _state.update { it.copy(currency = currency) }
+    fun onAccountTypeChange(type: AccountType) = _state.update { it.copy(accountType = type) }
+
+    // specific fields updates
+    fun onBankNameChange(bankName: String) = _state.update { it.copy(bankName = bankName) }
+    fun onCashLocationChange(location: String) = _state.update { it.copy(cashLocation = location) }
+    fun onDailyLimitChange(limit: String) = _state.update { it.copy(dailyLimit = limit) }
+    fun onInterestRateChange(rate: String) = _state.update { it.copy(interestRate = rate) }
+
+    fun saveAccount(onSuccess: () -> Unit) {
+        val currentState = _state.value
+
+        // simple validation
+        if (currentState.name.isBlank()) {
+            _state.update { it.copy(error = "account name cannot be empty") }
+            return
+        }
+
+        val initialBalance = currentState.balance.toLongOrNull() ?: 0L
+
+        val params = when (currentState.accountType) {
+            AccountType.BANK -> AccountCreationParams.Bank(
+                userId = userId,
+                name = currentState.name,
+                note = currentState.note,
+                initBalance = initialBalance,
+                currency = currentState.currency,
+                bankName = currentState.bankName.ifBlank { "My Bank" }
+            )
+            AccountType.CASH -> AccountCreationParams.Cash(
+                userId = userId,
+                name = currentState.name,
+                note = currentState.note,
+                initBalance = initialBalance,
+                currency = currentState.currency,
+                cashLocation = currentState.cashLocation.ifBlank { "Wallet" },
+                dailyLimit = currentState.dailyLimit.toLongOrNull() ?: 0L
+            )
+            AccountType.DEPOSIT -> AccountCreationParams.Deposit(
+                userId = userId,
+                name = currentState.name,
+                note = currentState.note,
+                initBalance = initialBalance,
+                currency = currentState.currency,
+                interestRate = currentState.interestRate.toDoubleOrNull() ?: 0.0
+            )
+        }
+
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+            val success = accountService.createAccount(params)
+
+            if (success) {
+                _state.update { it.copy(isLoading = false) }
+                onSuccess()
+            } else {
+                _state.update { it.copy(isLoading = false, error = "failed to create account") }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/CreateTransactionScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.account.Account
+import model.enum.CurrencyType
+import model.enum.TransactionType
+import model.params.TransactionCreationParams
+import model.transaction.TransactionCategory
+import repository.AccountRepository
+import repository.CategoryRepository
+import service.TransactionService
+
+data class CreateTransactionState(
+    val selectedType: TransactionType = TransactionType.EXPENSE,
+    val amount: String = "",
+    val note: String = "",
+    val selectedCurrency: CurrencyType = CurrencyType.USD,
+
+    val selectedAccountId: String = "",
+    val selectedTargetAccountId: String = "",
+    val selectedCategoryId: String = "",
+
+    val availableAccounts: List<Account> = emptyList(),
+    val availableCategories: List<TransactionCategory> = emptyList(),
+
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+class CreateTransactionScreenModel(
+    private val userId: String,
+    private val accountRepository: AccountRepository,
+    private val categoryRepository: CategoryRepository,
+    private val transactionService: TransactionService
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(CreateTransactionState())
+    val state = _state.asStateFlow()
+
+    init {
+        screenModelScope.launch {
+            launch {
+                accountRepository.getAllAccountsFlow().collect { accounts ->
+                    val userAccounts = accounts.filter { it.userId == userId }
+                    _state.update {
+                        it.copy(
+                            availableAccounts = userAccounts,
+                            selectedAccountId = if (it.selectedAccountId.isEmpty()) userAccounts.firstOrNull()?.id ?: "" else it.selectedAccountId
+                        )
+                    }
+                }
+            }
+            launch {
+                categoryRepository.getAllCategoriesFlow().collect { categories ->
+                    _state.update {
+                        it.copy(
+                            availableCategories = categories,
+                            selectedCategoryId = if (it.selectedCategoryId.isEmpty()) categories.firstOrNull()?.id ?: "" else it.selectedCategoryId
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun onTypeChange(type: TransactionType) = _state.update { it.copy(selectedType = type) }
+    fun onAmountChange(amount: String) = _state.update { it.copy(amount = amount) }
+    fun onNoteChange(note: String) = _state.update { it.copy(note = note) }
+    fun onCurrencyChange(currency: CurrencyType) = _state.update { it.copy(selectedCurrency = currency) }
+    fun onAccountChange(id: String) = _state.update { it.copy(selectedAccountId = id) }
+    fun onTargetAccountChange(id: String) = _state.update { it.copy(selectedTargetAccountId = id) }
+    fun onCategoryChange(id: String) = _state.update { it.copy(selectedCategoryId = id) }
+
+    fun submitTransaction(onSuccess: () -> Unit) {
+        val st = _state.value
+        val parsedAmount = st.amount.toLongOrNull() ?: 0L
+
+        if (parsedAmount <= 0) {
+            _state.update { it.copy(error = "invalid amount") }
+            return
+        }
+
+        // same account transfer forbidden
+        if (st.selectedType == TransactionType.TRANSFER && st.selectedAccountId == st.selectedTargetAccountId) {
+            _state.update { it.copy(error = "Source and Target accounts must be different") }
+            return
+        }
+
+        val commonParams = TransactionCreationParams.Common(
+            userId = userId,
+            accountId = st.selectedAccountId,
+            amount = parsedAmount,
+            currency = st.selectedCurrency,
+            date = "",
+            categoryId = st.selectedCategoryId.ifBlank { null }, // Конвертуємо пустоту в null
+            note = st.note
+        )
+
+        screenModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+
+            val success = when (st.selectedType) {
+                TransactionType.EXPENSE -> transactionService.expense(TransactionCreationParams.Expense(commonParams))
+                TransactionType.INCOME -> transactionService.income(TransactionCreationParams.Income(commonParams))
+                TransactionType.TRANSFER -> transactionService.transfer(TransactionCreationParams.Transfer(commonParams, st.selectedTargetAccountId))
+            }
+
+            if (success) {
+                _state.update { it.copy(isLoading = false) }
+                onSuccess()
+            } else {
+                _state.update { it.copy(isLoading = false, error = "Transaction failed") }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/CategoriesScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import model.enum.TransactionType
+import model.transaction.TransactionCategory
+import repository.CategoryRepository
+import service.CategoryService
+
+data class CategoriesState(
+    val categories: List<TransactionCategory> = emptyList(),
+
+    // form fields
+    val editingCategoryId: String? = null,
+    val newCategoryName: String = "",
+    val newCategoryType: TransactionType = TransactionType.EXPENSE,
+    val newCategoryIcon: String = "Home" // default
+)
+
+class CategoriesScreenModel(
+    private val categoryService: CategoryService,
+    private val categoryRepository: CategoryRepository
+) : ScreenModel {
+
+    private val _state = MutableStateFlow(CategoriesState())
+    val state = _state.asStateFlow()
+
+    init {
+        screenModelScope.launch {
+            categoryRepository.getAllCategoriesFlow().collect { list ->
+                _state.update { it.copy(categories = list) }
+            }
+        }
+    }
+
+    fun onNameChange(name: String) = _state.update { it.copy(newCategoryName = name) }
+    fun onTypeChange(type: TransactionType) = _state.update { it.copy(newCategoryType = type) }
+    fun onIconChange(iconName: String) = _state.update { it.copy(newCategoryIcon = iconName) }
+
+    fun startEditing(category: TransactionCategory) {
+        _state.update {
+            it.copy(
+                editingCategoryId = category.id,
+                newCategoryName = category.name,
+                newCategoryType = category.type,
+                newCategoryIcon = category.iconName
+            )
+        }
+    }
+
+    fun cancelEditing() {
+        _state.update {
+            it.copy(
+                editingCategoryId = null,
+                newCategoryName = "",
+                newCategoryType = TransactionType.EXPENSE,
+                newCategoryIcon = "Home"
+            )
+        }
+    }
+
+    fun saveCategory() {
+        val currentState = _state.value
+        if (currentState.newCategoryName.isBlank()) return
+
+        screenModelScope.launch {
+            if (currentState.editingCategoryId != null) {
+                // update existing
+                val updatedCategory = TransactionCategory(
+                    id = currentState.editingCategoryId,
+                    name = currentState.newCategoryName,
+                    type = currentState.newCategoryType,
+                    iconName = currentState.newCategoryIcon
+                )
+                categoryService.updateCategory(updatedCategory)
+            } else {
+                // create new
+                categoryService.createCategory(
+                    name = currentState.newCategoryName,
+                    type = currentState.newCategoryType,
+                    iconName = currentState.newCategoryIcon
+                )
+            }
+            // reset form
+            cancelEditing()
+        }
+    }
+
+    fun deleteCategory(id: String) {
+        screenModelScope.launch {
+            categoryService.deleteCategory(id)
+            if (_state.value.editingCategoryId == id) {
+                cancelEditing()
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/viewmodel/SettingsScreenModel.kt ---
+package viewmodel
+
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.launch
+import model.user.User
+import service.UserService
+
+class SettingsScreenModel(
+    private val userService: UserService
+) : ScreenModel {
+
+    // deletes the specific user utilizing repo method
+    fun deleteUser(user: User, onComplete: () -> Unit) {
+        screenModelScope.launch {
+            userService.deleteUser(user)
+            onComplete()
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/settings/SettingsTab.kt ---
+package ui.settings
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import ui.theme.LocalCurrentUser
+import viewmodel.SettingsScreenModel
+
+// taking both theme and logout callbacks in constructor
+class SettingsTab(
+    private val onThemeChange: (Boolean) -> Unit,
+    private val onLogout: () -> Unit
+) : Tab {
+
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(index = 4u, title = "Settings")
+
+    @Composable
+    override fun Content() {
+        val user = LocalCurrentUser.current
+        val screenModel = rememberScreenModel {
+            SettingsScreenModel(AppDependencies.userService)
+        }
+
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
+            Text("Settings", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text("Theme Selection", style = MaterialTheme.typography.h6)
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                Button(onClick = { onThemeChange(false) }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                    Text("Default Gray", color = Color.White)
+                }
+                Button(onClick = { onThemeChange(true) }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF1976D2))) {
+                    Text("Ocean Blue", color = Color.White)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(48.dp))
+
+            Text("Danger Zone", style = MaterialTheme.typography.h6, color = Color.Red)
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                "Warning: This will permanently delete your user profile and all associated data inside.",
+                color = Color.Gray,
+                style = MaterialTheme.typography.body2
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                onClick = {
+                    screenModel.deleteUser(user) {
+                        // safely log out once delete is complete
+                        onLogout()
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+                Text("Delete My Profile", color = Color.White)
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/utils/IconMapper.kt ---
+package ui.utils
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.graphics.vector.ImageVector
+
+// utility object to map string names from db to actual compose material icons
+object IconMapper {
+    // a small predefined set of icons for user to pick from
+    val availableIcons = listOf(
+        "Home", "ShoppingCart", "Fastfood", "Commute", "LocalHospital",
+        "School", "FitnessCenter", "AccountBalanceWallet", "CardGiftcard",
+        "Flight", "Build", "Computer"
+    )
+
+    fun getIconByName(name: String): ImageVector {
+        return when (name) {
+            "Home" -> Icons.Default.Home
+            "ShoppingCart" -> Icons.Default.ShoppingCart
+            "Fastfood" -> Icons.Default.Fastfood
+            "Commute" -> Icons.Default.Commute
+            "LocalHospital" -> Icons.Default.LocalHospital
+            "School" -> Icons.Default.School
+            "FitnessCenter" -> Icons.Default.FitnessCenter
+            "AccountBalanceWallet" -> Icons.Default.AccountBalanceWallet
+            "CardGiftcard" -> Icons.Default.CardGiftcard
+            "Flight" -> Icons.Default.Flight
+            "Build" -> Icons.Default.Build
+            "Computer" -> Icons.Default.Computer
+            else -> Icons.Default.Category // default fallback
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/dashboard/DashboardTab.kt ---
+package ui.dashboard
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import model.account.Account
+import model.account.BankAccount
+import model.transaction.Transaction
+import model.transaction.TransactionCategory
+import ui.accounts.AccountsTab
+import ui.transactions.TransactionsTab
+import ui.theme.LocalCurrentUser
+import viewmodel.DashboardScreenModel
+
+object DashboardTab : Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(index = 0u, title = "Dashboard")
+
+    @Composable
+    override fun Content() {
+        val tabNavigator = LocalTabNavigator.current
+        val user = LocalCurrentUser.current
+        val screenModel = rememberScreenModel {
+            DashboardScreenModel(
+                userId = user.id,
+                accountRepository = AppDependencies.accountRepository,
+                transactionRepository = AppDependencies.transactionRepository,
+                categoryRepository = AppDependencies.categoryRepository
+            )
+        }
+        val state by screenModel.state.collectAsState()
+
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
+            Text(
+                text = "Welcome, ${user.login}",
+                style = MaterialTheme.typography.h4,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text("My Accounts", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                if (state.topAccounts.isEmpty()) {
+                    Text("No accounts yet. Create one!", color = Color.Gray)
+                } else {
+                    state.topAccounts.forEach { account ->
+                        AccountCard(
+                            account = account,
+                            modifier = Modifier.weight(1f),
+                            onClick = { tabNavigator.current = AccountsTab } // navigation
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Row(modifier = Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                Card(
+                    modifier = Modifier.weight(1.5f).fillMaxHeight(),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    elevation = 0.dp,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text("Recent Transactions", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                            Button(
+                                onClick = { tabNavigator.current = TransactionsTab }, // navigation
+                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                            ) {
+                                Text("View all", color = Color.White)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        if (state.recentTransactions.isEmpty()) {
+                            Text("No transactions yet.", color = Color.Gray)
+                        } else {
+                            LazyColumn {
+                                items(state.recentTransactions) { tx ->
+                                    TransactionRow(tx, state.activeCategories) // pass categories for icons
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Card(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    elevation = 0.dp,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        Text("Custom Categories", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                        Text("Create custom tags to track your spending habits.", color = Color.Gray, style = MaterialTheme.typography.body2)
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        if (state.activeCategories.isEmpty()) {
+                            Text("No categories yet.", color = Color.Gray)
+                        } else {
+                            LazyColumn {
+                                items(state.activeCategories) { cat ->
+                                    Card(
+                                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                                        backgroundColor = Color.LightGray.copy(alpha = 0.5f),
+                                        elevation = 0.dp
+                                    ) {
+                                        Text(cat.name, modifier = Modifier.padding(12.dp))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun AccountCard(account: Account, modifier: Modifier = Modifier, onClick: () -> Unit) {
+        Card(
+            modifier = modifier.height(160.dp),
+            backgroundColor = MaterialTheme.colors.surface,
+            shape = RoundedCornerShape(16.dp),
+            elevation = 0.dp
+        ) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.SpaceBetween) {
+                Column {
+                    Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                    val accName = if (account is BankAccount) account.bankName else account.name
+                    Text(accName, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                }
+                Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                Button(
+                    onClick = onClick,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("View Account ->", color = Color.White)
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun TransactionRow(tx: Transaction, categories: List<TransactionCategory>) {
+        val category = categories.find { it.id == tx.base.categoryId }
+        val iconName = category?.iconName ?: "Category" // get icon
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier.size(40.dp).background(Color.White, RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(ui.utils.IconMapper.getIconByName(iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
+                    Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                }
+            }
+            Text(
+                text = "${if (tx is Transaction.Expense) "-" else "+"}${tx.base.amount} ${tx.base.currency}",
+                fontWeight = FontWeight.Bold,
+                color = if (tx is Transaction.Expense) Color.Black else Color(0xFF4CAF50)
+            )
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/transactions/CreateTransactionScreen.kt ---
+package ui.transactions
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import model.enum.CurrencyType
+import model.enum.TransactionType
+import viewmodel.CreateTransactionScreenModel
+
+class CreateTransactionScreen(private val userId: String) : Screen {
+
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel {
+            CreateTransactionScreenModel(
+                userId,
+                AppDependencies.accountRepository,
+                AppDependencies.categoryRepository,
+                AppDependencies.transactionService
+            )
+        }
+        val state by screenModel.state.collectAsState()
+
+        Box(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
+            Card(
+                modifier = Modifier.width(500.dp).padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                Column(modifier = Modifier.padding(32.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "back")
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Add Transaction", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // type tabs
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        TransactionType.values().forEach { type ->
+                            Button(
+                                onClick = { screenModel.onTypeChange(type) },
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = if (state.selectedType == type) MaterialTheme.colors.primary else Color.LightGray
+                                ),
+                                modifier = Modifier.weight(1f)
+                            ) { Text(type.name, color = if (state.selectedType == type) Color.White else Color.Black) }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = state.amount,
+                            onValueChange = { screenModel.onAmountChange(it) },
+                            label = { Text("Amount") },
+                            modifier = Modifier.weight(2f),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                        )
+                        // toggle generic mock currency
+                        Button(
+                            onClick = {
+                                val next = if (state.selectedCurrency == CurrencyType.USD) CurrencyType.EUR else CurrencyType.USD
+                                screenModel.onCurrencyChange(next)
+                            },
+                            modifier = Modifier.weight(1f).height(56.dp).align(Alignment.Bottom),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                        ) {
+                            Text(state.selectedCurrency.name)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    OutlinedTextField(
+                        value = state.note,
+                        onValueChange = { screenModel.onNoteChange(it) },
+                        label = { Text("Note / Description") },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // account selectors (crude dropdown emulation)
+                    Text("Source Account", style = MaterialTheme.typography.caption)
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        state.availableAccounts.take(3).forEach { acc ->
+                            Button(
+                                onClick = { screenModel.onAccountChange(acc.id) },
+                                modifier = Modifier.weight(1f),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = if (state.selectedAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
+                                )
+                            ) { Text(acc.name, color = if (state.selectedAccountId == acc.id) Color.White else Color.Black) }
+                        }
+                    }
+
+                    if (state.selectedType == TransactionType.TRANSFER) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text("Target Account", style = MaterialTheme.typography.caption)
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            state.availableAccounts.take(3).forEach { acc ->
+                                Button(
+                                    onClick = { screenModel.onTargetAccountChange(acc.id) },
+                                    modifier = Modifier.weight(1f),
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = if (state.selectedTargetAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
+                                    )
+                                ) { Text(acc.name, color = if (state.selectedTargetAccountId == acc.id) Color.White else Color.Black) }
+                            }
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text("Category", style = MaterialTheme.typography.caption)
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            val filteredCats = state.availableCategories.filter { it.type == state.selectedType }.take(3)
+                            if (filteredCats.isEmpty()) Text("No categories for this type.", color = Color.Gray)
+                            filteredCats.forEach { cat ->
+                                Button(
+                                    onClick = { screenModel.onCategoryChange(cat.id) },
+                                    modifier = Modifier.weight(1f),
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = if (state.selectedCategoryId == cat.id) MaterialTheme.colors.primary else Color.LightGray
+                                    )
+                                ) { Text(cat.name, color = if (state.selectedCategoryId == cat.id) Color.White else Color.Black) }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+                    if (state.error != null) {
+                        Text(state.error!!, color = MaterialTheme.colors.error)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    Button(
+                        onClick = { screenModel.submitTransaction { navigator.pop() } },
+                        modifier = Modifier.fillMaxWidth().height(45.dp),
+                        enabled = !state.isLoading,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                    ) {
+                        Text(if (state.isLoading) "Processing..." else "Submit", color = Color.White)
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/transactions/TransactionsTab.kt ---
+package ui.transactions
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import model.transaction.Transaction
+import model.transaction.TransactionCategory
+import ui.theme.LocalCurrentUser
+import viewmodel.TransactionsScreenModel
+
+object TransactionsTab : Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(index = 3u, title = "Transactions")
+
+    @Composable
+    override fun Content() {
+        val rootNavigator = LocalNavigator.current?.parent
+        val user = LocalCurrentUser.current
+        val screenModel = rememberScreenModel {
+            TransactionsScreenModel(
+                user.id,
+                AppDependencies.transactionRepository,
+                AppDependencies.categoryRepository,
+                AppDependencies.transactionService
+            )
+        }
+        val state by screenModel.state.collectAsState()
+
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("All Transactions", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+
+                Button(
+                    onClick = { rootNavigator?.push(CreateTransactionScreen(user.id)) },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("+ Add Transaction", color = Color.White)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            if (state.transactions.isEmpty()) {
+                Text("No transactions found.", color = Color.Gray)
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
+                    items(state.transactions) { tx ->
+                        RemovableTransactionRow(
+                            tx = tx,
+                            categories = state.categories,
+                            onDelete = { screenModel.deleteTransaction(tx.id) }
+                        )
+                        Divider(color = Color.LightGray)
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun RemovableTransactionRow(tx: Transaction, categories: List<TransactionCategory>, onDelete: () -> Unit) {
+        val category = categories.find { it.id == tx.base.categoryId }
+        val iconName = category?.iconName ?: "Category" // display icon
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier.size(40.dp).background(Color.LightGray, RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(ui.utils.IconMapper.getIconByName(iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
+                    Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "${if (tx is Transaction.Expense) "-" else "+"}${tx.base.amount} ${tx.base.currency}",
+                    fontWeight = FontWeight.Bold,
+                    color = if (tx is Transaction.Expense) Color.Black else Color(0xFF4CAF50)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red.copy(alpha = 0.6f))
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/accounts/CreateAccountScreen.kt ---
+package ui.accounts
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import model.enum.AccountType
+import model.enum.CurrencyType
+import viewmodel.CreateAccountScreenModel
+
+class CreateAccountScreen(private val userId: String) : Screen {
+
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel {
+            CreateAccountScreenModel(userId, AppDependencies.accountService)
+        }
+        val state by screenModel.state.collectAsState()
+
+        Box(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
+            Card(
+                modifier = Modifier.width(450.dp).padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                Column(modifier = Modifier.padding(32.dp)) {
+                    // header with back button
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "back")
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Create New Account",
+                            style = MaterialTheme.typography.h5,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colors.primaryVariant
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // account type selector
+                    Text("Account Type", color = Color.Gray, style = MaterialTheme.typography.caption)
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        AccountType.values().forEach { type ->
+                            Button(
+                                onClick = { screenModel.onAccountTypeChange(type) },
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = if (state.accountType == type) MaterialTheme.colors.primary else Color.LightGray
+                                ),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(type.name, color = if (state.accountType == type) Color.White else Color.Black)
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // common fields
+                    OutlinedTextField(
+                        value = state.name,
+                        onValueChange = { screenModel.onNameChange(it) },
+                        label = { Text("Account Name") },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    OutlinedTextField(
+                        value = state.note,
+                        onValueChange = { screenModel.onNoteChange(it) },
+                        label = { Text("Note / Description") },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = state.balance,
+                            onValueChange = { screenModel.onBalanceChange(it) },
+                            label = { Text("Initial Balance") },
+                            modifier = Modifier.weight(2f),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                        )
+
+                        // simple currency selector emulation
+                        Button(
+                            onClick = {
+                                // toggle currency logically for demo
+                                val next = if (state.currency == CurrencyType.USD) CurrencyType.EUR else CurrencyType.USD
+                                screenModel.onCurrencyChange(next)
+                            },
+                            modifier = Modifier.weight(1f).height(56.dp).align(Alignment.Bottom),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                        ) {
+                            Text(state.currency.name)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // specific fields based on account type
+                    when (state.accountType) {
+                        AccountType.BANK -> {
+                            OutlinedTextField(
+                                value = state.bankName,
+                                onValueChange = { screenModel.onBankNameChange(it) },
+                                label = { Text("Bank Name") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                            )
+                        }
+                        AccountType.CASH -> {
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                OutlinedTextField(
+                                    value = state.cashLocation,
+                                    onValueChange = { screenModel.onCashLocationChange(it) },
+                                    label = { Text("Cash Location") },
+                                    modifier = Modifier.weight(1f),
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                                )
+                                OutlinedTextField(
+                                    value = state.dailyLimit,
+                                    onValueChange = { screenModel.onDailyLimitChange(it) },
+                                    label = { Text("Daily Limit") },
+                                    modifier = Modifier.weight(1f),
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                                )
+                            }
+                        }
+                        AccountType.DEPOSIT -> {
+                            OutlinedTextField(
+                                value = state.interestRate,
+                                onValueChange = { screenModel.onInterestRateChange(it) },
+                                label = { Text("Interest Rate (%)") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    if (state.error != null) {
+                        Text(state.error!!, color = MaterialTheme.colors.error)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    Button(
+                        onClick = {
+                            screenModel.saveAccount {
+                                navigator.pop() // return to accounts tab on success
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth().height(45.dp),
+                        enabled = !state.isLoading,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primary,
+                            contentColor = MaterialTheme.colors.onPrimary
+                        )
+                    ) {
+                        Text(if (state.isLoading) "Saving..." else "Create Account")
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/accounts/EditAccountScreen.kt ---
+package ui.accounts
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import model.account.BankAccount
+import model.account.CashAccount
+import model.account.DepositAccount
+import viewmodel.EditAccountScreenModel
+
+class EditAccountScreen(private val accountId: String) : Screen {
+
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel {
+            EditAccountScreenModel(accountId, AppDependencies.accountRepository, AppDependencies.accountService)
+        }
+        val state by screenModel.state.collectAsState()
+
+        Box(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
+            Card(
+                modifier = Modifier.width(450.dp).padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                if (state.isLoading) {
+                    Box(modifier = Modifier.padding(64.dp), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                    return@Card
+                }
+
+                if (state.account == null) {
+                    Text("Account not found.", modifier = Modifier.padding(32.dp))
+                    return@Card
+                }
+
+                Column(modifier = Modifier.padding(32.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "back")
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Edit Account", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    OutlinedTextField(
+                        value = state.name,
+                        onValueChange = { screenModel.onNameChange(it) },
+                        label = { Text("Account Name") },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    OutlinedTextField(
+                        value = state.note,
+                        onValueChange = { screenModel.onNoteChange(it) },
+                        label = { Text("Note / Description") },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // specific fields matching class type
+                    when (state.account) {
+                        is BankAccount -> {
+                            OutlinedTextField(
+                                value = state.bankName,
+                                onValueChange = { screenModel.onBankNameChange(it) },
+                                label = { Text("Bank Name") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                            )
+                        }
+                        is CashAccount -> {
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                OutlinedTextField(
+                                    value = state.cashLocation,
+                                    onValueChange = { screenModel.onCashLocationChange(it) },
+                                    label = { Text("Cash Location") },
+                                    modifier = Modifier.weight(1f),
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                                )
+                                OutlinedTextField(
+                                    value = state.dailyLimit,
+                                    onValueChange = { screenModel.onDailyLimitChange(it) },
+                                    label = { Text("Daily Limit") },
+                                    modifier = Modifier.weight(1f),
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                                )
+                            }
+                        }
+                        is DepositAccount -> {
+                            OutlinedTextField(
+                                value = state.interestRate,
+                                onValueChange = { screenModel.onInterestRateChange(it) },
+                                label = { Text("Interest Rate (%)") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                            )
+                        }
+
+                        else -> {
+                            Text(
+                                text = "No additional fields for this account type.",
+                                style = MaterialTheme.typography.body2,
+                                color = Color.Gray,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(
+                            onClick = { screenModel.deleteAccount { navigator.pop() } },
+                            modifier = Modifier.weight(1f).height(45.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red.copy(alpha = 0.8f))
+                        ) {
+                            Text("Delete", color = Color.White)
+                        }
+                        Button(
+                            onClick = { screenModel.updateAccount { navigator.pop() } },
+                            modifier = Modifier.weight(2f).height(45.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                        ) {
+                            Text("Save changes", color = Color.White)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/accounts/AccountsTab.kt ---
+package ui.accounts
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import model.account.Account
+import model.account.BankAccount
+import ui.transactions.TransactionsTab
+import ui.theme.LocalCurrentUser
+import viewmodel.AccountsScreenModel
+
+object AccountsTab : Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(index = 1u, title = "Accounts")
+
+    @Composable
+    override fun Content() {
+        val rootNavigator = LocalNavigator.current?.parent
+        val tabNavigator = LocalTabNavigator.current
+        val user = LocalCurrentUser.current
+        val screenModel = rememberScreenModel {
+            AccountsScreenModel(user.id, AppDependencies.accountRepository)
+        }
+        val state by screenModel.state.collectAsState()
+
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Accounts", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+
+                Button(
+                    onClick = {
+                        rootNavigator?.push(CreateAccountScreen(user.id))
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("+ Add Account", color = Color.White)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            if (state.accounts.isEmpty()) {
+                Text("No accounts yet. Click the button above to create one!", color = Color.Gray)
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 350.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(state.accounts) { account ->
+                        DetailedAccountCard(
+                            account = account,
+                            onEditClick = { rootNavigator?.push(EditAccountScreen(account.id)) },
+                            onHistoryClick = { tabNavigator.current = TransactionsTab }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun DetailedAccountCard(account: Account, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
+        Card(
+            modifier = Modifier.fillMaxWidth().height(400.dp),
+            backgroundColor = MaterialTheme.colors.surface,
+            shape = RoundedCornerShape(16.dp),
+            elevation = 0.dp
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                val accName = if (account is BankAccount) account.bankName else account.name
+                Text(accName, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(account.note.ifBlank { "No specific notes provided." }, color = Color.Gray, style = MaterialTheme.typography.body2)
+
+                Spacer(modifier = Modifier.height(24.dp))
+                Text("Transactions", fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("No local history available yet.", color = Color.Gray)
+                }
+
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(
+                        onClick = onHistoryClick,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                    ) {
+                        Text("Full history", color = Color.White)
+                    }
+                    OutlinedButton(onClick = onEditClick) {
+                        Text("Edit", color = MaterialTheme.colors.primary)
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/theme/Theme.kt ---
+package ui.theme
+
+import androidx.compose.material.Colors
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
+import model.user.User
+
+// default gray theme based on your mockups
+val DefaultGrayColors = lightColors(
+    primary = Color(0xFF4A4A4A),
+    primaryVariant = Color(0xFF333333),
+    secondary = Color(0xFF757575),
+    background = Color(0xFFF5F5F5),
+    surface = Color(0xFFE0E0E0),
+    onPrimary = Color.White,
+    onBackground = Color.Black,
+    onSurface = Color.Black
+)
+
+// optional blue theme for settings demonstration
+val BlueColors = lightColors(
+    primary = Color(0xFF1976D2),
+    primaryVariant = Color(0xFF115293),
+    secondary = Color(0xFF2196F3),
+    background = Color(0xFFF0F4F8),
+    surface = Color(0xFFE3F2FD),
+    onPrimary = Color.White,
+    onBackground = Color.Black,
+    onSurface = Color.Black
+)
+
+// composition local to pass current logged in user globally to tabs
+val LocalCurrentUser = staticCompositionLocalOf<User> {
+    error("user not provided")
+}-e 
+
+--- ./src/commonMain/kotlin/ui/main/MainContainerScreen.kt ---
+package ui.main
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabNavigator
+import model.user.User
+import ui.accounts.AccountsTab
+import ui.categories.CategoriesTab
+import ui.dashboard.DashboardTab
+import ui.login.LoginScreen
+import ui.settings.SettingsTab
+import ui.transactions.TransactionsTab
+import ui.theme.LocalCurrentUser
+
+class MainContainerScreen(
+    private val user: User,
+    private val onThemeChange: (Boolean) -> Unit
+) : Screen {
+
+    @Composable
+    override fun Content() {
+        // we capture the root navigator here before entering the tab context
+        // to avoid class cast exceptions during voyager recomposition
+        val rootNavigator = LocalNavigator.currentOrThrow
+
+        // safe logout callback
+        val onLogout = {
+            rootNavigator.replaceAll(LoginScreen(onThemeChange))
+        }
+
+        // provide user to all tabs deeply
+        CompositionLocalProvider(LocalCurrentUser provides user) {
+            TabNavigator(DashboardTab) { tabNavigator ->
+                // boxwithconstraints makes UI responsive
+                BoxWithConstraints(modifier = Modifier.fillMaxSize().background(Color.White)) {
+                    val isWide = maxWidth > 800.dp
+
+                    if (isWide) {
+                        // desktop/tablet layout: sidebar + content
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            // pass the safe logout callback to the sidebar
+                            Sidebar(tabNavigator, onLogout)
+                            Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                CurrentTab()
+                            }
+                        }
+                    } else {
+                        // mobile layout: content + bottombar
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                                CurrentTab()
+                            }
+                            // pass the safe logout callback to the bottom bar
+                            BottomNavigationBar(tabNavigator, onLogout)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun Sidebar(tabNavigator: TabNavigator, onLogout: () -> Unit) {
+        Column(
+            modifier = Modifier
+                .width(250.dp)
+                .fillMaxHeight()
+                .background(MaterialTheme.colors.surface)
+                .padding(vertical = 32.dp, horizontal = 16.dp)
+        ) {
+            Text(
+                text = "FinManager",
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 32.dp, start = 16.dp)
+            )
+
+            // tab links
+            SidebarItem("Dashboard", DashboardTab, tabNavigator)
+            SidebarItem("Transactions", TransactionsTab, tabNavigator)
+            SidebarItem("Accounts", AccountsTab, tabNavigator)
+            SidebarItem("Categories", CategoriesTab, tabNavigator)
+
+            // disabled item per instructions
+            Text(
+                text = "Analytics",
+                color = Color.Gray,
+                modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // settings custom tab requires theme callback and logout callback
+            val settingsTab = SettingsTab(onThemeChange, onLogout)
+            SidebarItem("Settings", settingsTab, tabNavigator)
+
+            // logout functionality using the passed callback
+            Text(
+                text = "Logout",
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onLogout() }
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+            )
+        }
+    }
+
+    @Composable
+    private fun SidebarItem(title: String, tab: Tab, tabNavigator: TabNavigator) {
+        val isSelected = tabNavigator.current == tab
+        val bgColor = if (isSelected) MaterialTheme.colors.primary.copy(alpha = 0.1f) else Color.Transparent
+        val textColor = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.onBackground
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(bgColor)
+                .clickable { tabNavigator.current = tab }
+                .padding(vertical = 12.dp, horizontal = 16.dp)
+        ) {
+            Text(text = title, color = textColor, fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal)
+        }
+    }
+
+    @Composable
+    private fun BottomNavigationBar(tabNavigator: TabNavigator, onLogout: () -> Unit) {
+        BottomNavigation(
+            backgroundColor = MaterialTheme.colors.surface,
+            contentColor = MaterialTheme.colors.onSurface
+        ) {
+            BottomNavigationItem(
+                selected = tabNavigator.current == DashboardTab,
+                onClick = { tabNavigator.current = DashboardTab },
+                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                label = { Text("Dash") }
+            )
+            BottomNavigationItem(
+                selected = tabNavigator.current == TransactionsTab,
+                onClick = { tabNavigator.current = TransactionsTab },
+                icon = { Icon(Icons.Default.List, contentDescription = null) },
+                label = { Text("Trans") }
+            )
+            BottomNavigationItem(
+                selected = tabNavigator.current == AccountsTab,
+                onClick = { tabNavigator.current = AccountsTab },
+                icon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
+                label = { Text("Accounts") }
+            )
+            BottomNavigationItem(
+                selected = tabNavigator.current == CategoriesTab,
+                onClick = { tabNavigator.current = CategoriesTab },
+                icon = { Icon(Icons.Default.Category, contentDescription = null) },
+                label = { Text("Cat") }
+            )
+            BottomNavigationItem(
+                selected = false,
+                onClick = { onLogout() }, // using safe callback
+                icon = { Icon(Icons.Default.ExitToApp, contentDescription = null) },
+                label = { Text("Exit") }
+            )
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/categories/CategoriesTab.kt ---
+package ui.categories
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import model.enum.TransactionType
+import model.transaction.TransactionCategory
+import ui.utils.IconMapper
+import viewmodel.CategoriesScreenModel
+
+object CategoriesTab : Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(index = 2u, title = "Categories")
+
+    @Composable
+    override fun Content() {
+        val screenModel = rememberScreenModel {
+            CategoriesScreenModel(AppDependencies.categoryService, AppDependencies.categoryRepository)
+        }
+        val state by screenModel.state.collectAsState()
+
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
+            Text("Category Management", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                // create or edit category form
+                Card(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    elevation = 0.dp,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        Text(
+                            text = if (state.editingCategoryId != null) "Edit Category" else "Create New Category",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        OutlinedTextField(
+                            value = state.newCategoryName,
+                            onValueChange = { screenModel.onNameChange(it) },
+                            placeholder = { Text("Category name...") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text("Type", color = Color.Gray, style = MaterialTheme.typography.caption)
+
+                        // simple buttons to emulate selection
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button(
+                                onClick = { screenModel.onTypeChange(TransactionType.EXPENSE) },
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = if (state.newCategoryType == TransactionType.EXPENSE) MaterialTheme.colors.primary else Color.LightGray
+                                ),
+                                modifier = Modifier.weight(1f)
+                            ) { Text("Expense", color = if (state.newCategoryType == TransactionType.EXPENSE) Color.White else Color.Black) }
+
+                            Button(
+                                onClick = { screenModel.onTypeChange(TransactionType.INCOME) },
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = if (state.newCategoryType == TransactionType.INCOME) MaterialTheme.colors.primary else Color.LightGray
+                                ),
+                                modifier = Modifier.weight(1f)
+                            ) { Text("Income", color = if (state.newCategoryType == TransactionType.INCOME) Color.White else Color.Black) }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text("Select Icon", color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(4),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            items(IconMapper.availableIcons) { iconName ->
+                                val isSelected = state.newCategoryIcon == iconName
+                                Box(
+                                    modifier = Modifier
+                                        .aspectRatio(1f)
+                                        .background(
+                                            if (isSelected) MaterialTheme.colors.primary.copy(alpha = 0.2f) else Color.White,
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                        .clickable { screenModel.onIconChange(iconName) },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = IconMapper.getIconByName(iconName),
+                                        contentDescription = iconName,
+                                        tint = if (isSelected) MaterialTheme.colors.primary else Color.Gray
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        if (state.editingCategoryId != null) {
+                            OutlinedButton(
+                                onClick = { screenModel.cancelEditing() },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Cancel")
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+
+                        Button(
+                            onClick = { screenModel.saveCategory() },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                        ) {
+                            Text(if (state.editingCategoryId != null) "Update category" else "Save category", color = Color.White)
+                        }
+                    }
+                }
+
+                // active categories list
+                Column(modifier = Modifier.weight(2f)) {
+                    Text("Active Categories", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    if (state.categories.isEmpty()) {
+                        Text("No active categories.", color = Color.Gray)
+                    } else {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(state.categories) { cat ->
+                                CategoryCard(
+                                    category = cat,
+                                    onEdit = { screenModel.startEditing(cat) },
+                                    onDelete = { screenModel.deleteCategory(cat.id) }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun CategoryCard(category: TransactionCategory, onEdit: () -> Unit, onDelete: () -> Unit) {
+        Card(
+            modifier = Modifier.fillMaxWidth().height(80.dp),
+            backgroundColor = MaterialTheme.colors.surface,
+            elevation = 0.dp,
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.padding(16.dp).fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier.size(48.dp).background(Color.White, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(IconMapper.getIconByName(category.iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column {
+                        Text(category.name, fontWeight = FontWeight.Bold)
+                        Text(category.type.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                    }
+                }
+                Row {
+                    IconButton(onClick = onEdit) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Gray)
+                    }
+                    IconButton(onClick = onDelete) {
+                        Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red.copy(alpha = 0.6f))
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/login/LoginScreen.kt ---
+package ui.login
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import ui.main.MainContainerScreen
+import viewmodel.LoginScreenModel
+
+class LoginScreen(private val onThemeChange: (Boolean) -> Unit = {}) : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel {
+            LoginScreenModel(userService = AppDependencies.userService)
+        }
+        val state by screenModel.state.collectAsState()
+
+        // main background
+        Box(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
+            // centered grey card matching the design mockup
+            Card(
+                modifier = Modifier.width(350.dp).padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp // flat design
+            ) {
+                Column(
+                    modifier = Modifier.padding(32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Login",
+                        style = MaterialTheme.typography.h5,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.primaryVariant
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    OutlinedTextField(
+                        value = state.login,
+                        onValueChange = { screenModel.onLoginChanged(it) },
+                        placeholder = { Text("Enter login") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            backgroundColor = Color.White,
+                            unfocusedBorderColor = Color.Transparent,
+                            focusedBorderColor = MaterialTheme.colors.primary
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    OutlinedTextField(
+                        value = state.pass,
+                        onValueChange = { screenModel.onPasswordChanged(it) },
+                        placeholder = { Text("Enter password") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            backgroundColor = Color.White,
+                            unfocusedBorderColor = Color.Transparent,
+                            focusedBorderColor = MaterialTheme.colors.primary
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    if (state.error != null) {
+                        Text(state.error!!, color = MaterialTheme.colors.error)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    Button(
+                        onClick = {
+                            screenModel.login { user ->
+                                // navigate to main dashboard container
+                                navigator.replaceAll(MainContainerScreen(user, onThemeChange))
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(0.6f).height(45.dp),
+                        enabled = !state.isLoading,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primary,
+                            contentColor = MaterialTheme.colors.onPrimary
+                        )
+                    ) {
+                        Text(if (state.isLoading) "Loading..." else "Login")
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    TextButton(
+                        onClick = { navigator.push(RegistrationScreen()) },
+                        enabled = !state.isLoading
+                    ) {
+                        Text("Create account", color = MaterialTheme.colors.onBackground)
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/ui/login/RegistrationScreen.kt ---
+package ui.login
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import viewmodel.RegistrationScreenModel
+
+class RegistrationScreen : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel {
+            RegistrationScreenModel(userService = AppDependencies.userService)
+        }
+        val state by screenModel.state.collectAsState()
+
+        Box(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
+            Card(
+                modifier = Modifier.width(350.dp).padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Register",
+                        style = MaterialTheme.typography.h5,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.primaryVariant
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    OutlinedTextField(
+                        value = state.login,
+                        onValueChange = { screenModel.onLoginChanged(it) },
+                        placeholder = { Text("Choose login") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            backgroundColor = Color.White,
+                            unfocusedBorderColor = Color.Transparent
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    OutlinedTextField(
+                        value = state.pass,
+                        onValueChange = { screenModel.onPasswordChanged(it) },
+                        placeholder = { Text("Create password") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            backgroundColor = Color.White,
+                            unfocusedBorderColor = Color.Transparent
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    OutlinedTextField(
+                        value = state.confirmPass,
+                        onValueChange = { screenModel.onConfirmPasswordChanged(it) },
+                        placeholder = { Text("Repeat password") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            backgroundColor = Color.White,
+                            unfocusedBorderColor = Color.Transparent
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    if (state.error != null) {
+                        Text(state.error!!, color = MaterialTheme.colors.error)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    Button(
+                        onClick = {
+                            screenModel.register {
+                                navigator.pop() // go back to login on success
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(0.6f).height(45.dp),
+                        enabled = !state.isLoading,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primary,
+                            contentColor = MaterialTheme.colors.onPrimary
+                        )
+                    ) {
+                        Text(if (state.isLoading) "Working..." else "Register")
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    TextButton(
+                        onClick = { navigator.pop() },
+                        enabled = !state.isLoading
+                    ) {
+                        Text("Back to login", color = MaterialTheme.colors.onBackground)
+                    }
+                }
+            }
+        }
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/app/App.kt ---
+package app
+
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import cafe.adriel.voyager.navigator.Navigator
+import ui.login.LoginScreen
+import ui.theme.DefaultGrayColors
+import ui.theme.BlueColors
+
+@Composable
+fun App() {
+    // we hold the current theme state here at the very top
+    var isBlueTheme by remember { mutableStateOf(false) }
+    val colors = if (isBlueTheme) BlueColors else DefaultGrayColors
+
+    MaterialTheme(colors = colors) {
+        // we pass the theme toggle callback down via screen params if needed,
+        // but for voyager it's easier to use a simple static object or pass it via constructor.
+        // here we initialize standard login screen
+        Navigator(LoginScreen { newThemeStatus ->
+            isBlueTheme = newThemeStatus
+        })
+    }
+}-e 
+
+--- ./src/commonMain/kotlin/app/Platform.kt ---
+package app
+
+class JVMPlatform {
+    val name: String = "Java ${System.getProperty("java.version")}"
+}
+
+fun getPlatform() = JVMPlatform()-e 
+
+--- ./src/commonMain/kotlin/app/Theme.kt ---
+package app
+
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+
+// define our custom palettes
+val GrayColorPalette = lightColors(
+    primary = Color(0xFF616161),
+    primaryVariant = Color(0xFF373737),
+    secondary = Color(0xFF757575),
+    background = Color(0xFFF5F5F5),
+    surface = Color(0xFFE0E0E0),
+    onPrimary = Color.White,
+    onBackground = Color.Black,
+    onSurface = Color.Black
+)
+
+val DarkColorPalette = darkColors(
+    primary = Color(0xFF9E9E9E),
+    primaryVariant = Color(0xFF616161),
+    secondary = Color(0xFFBDBDBD),
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
+    onPrimary = Color.Black,
+    onBackground = Color.White,
+    onSurface = Color.White
+)
+
+val LightBlueColorPalette = lightColors(
+    primary = Color(0xFF1976D2),
+    primaryVariant = Color(0xFF004BA0),
+    secondary = Color(0xFF64B5F6),
+    background = Color(0xFFF3F8FF),
+    surface = Color.White,
+    onPrimary = Color.White,
+    onBackground = Color.Black,
+    onSurface = Color.Black
+)
+
+enum class AppTheme {
+    GRAY, DARK, BLUE
+}
+
+// local provider for the current theme state
+val LocalThemeState = compositionLocalOf<MutableState<AppTheme>> {
+    error("theme state not provided")
+}
+
+@Composable
+fun FinanceManagerTheme(
+    theme: AppTheme,
+    content: @Composable () -> Unit
+) {
+    val colors = when (theme) {
+        AppTheme.GRAY -> GrayColorPalette
+        AppTheme.DARK -> DarkColorPalette
+        AppTheme.BLUE -> LightBlueColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        content = content
+    )
+}-e 
+
+--- ./src/desktopMain/kotlin/ui/main.kt ---
+package ui
+
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.room.Room
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import data.AppDatabase
+import AppDependencies
+import androidx.compose.ui.window.WindowPlacement
+import androidx.compose.ui.window.rememberWindowState
+import app.App
+import java.io.File
+
+fun main() {
+    // 1. create DB file
+    val dbFile = File("FinanceManager.db")
+
+    // 2. initialize database
+    val database = Room.databaseBuilder<AppDatabase>(
+        name = dbFile.absolutePath,
+    )
+        .setDriver(BundledSQLiteDriver()) // KMP Room driver for desktop
+        .fallbackToDestructiveMigration(dropAllTables = true)
+        .build()
+
+    // 3. pass database to DI container
+    AppDependencies.init(database)
+
+    // 4. launch UI
+    application {
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "FinanceManagerCompose",
+            state = rememberWindowState(placement = WindowPlacement.Maximized),
+            resizable = false,
+        ) {
+            App()
+        }
+    }
+}-e 
+

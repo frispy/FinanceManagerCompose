@@ -3,6 +3,7 @@ package ui.accounts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -68,7 +70,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
 
                     OutlinedTextField(
                         value = state.name,
-                        onValueChange = { screenModel.onNameChange(it) },
+                        onValueChange = { if (it.length <= 40) screenModel.onNameChange(it) },
                         label = { Text("Account Name") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
@@ -78,7 +80,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
 
                     OutlinedTextField(
                         value = state.note,
-                        onValueChange = { screenModel.onNoteChange(it) },
+                        onValueChange = { if (it.length <= 150) screenModel.onNoteChange(it) },
                         label = { Text("Note / Description") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
@@ -91,7 +93,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
                         is BankAccount -> {
                             OutlinedTextField(
                                 value = state.bankName,
-                                onValueChange = { screenModel.onBankNameChange(it) },
+                                onValueChange = { if (it.length <= 50) screenModel.onBankNameChange(it) },
                                 label = { Text("Bank Name") },
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
@@ -101,16 +103,17 @@ class EditAccountScreen(private val accountId: String) : Screen {
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 OutlinedTextField(
                                     value = state.cashLocation,
-                                    onValueChange = { screenModel.onCashLocationChange(it) },
+                                    onValueChange = { if (it.length <= 50) screenModel.onCashLocationChange(it) },
                                     label = { Text("Cash Location") },
                                     modifier = Modifier.weight(1f),
                                     colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                                 )
                                 OutlinedTextField(
                                     value = state.dailyLimit,
-                                    onValueChange = { screenModel.onDailyLimitChange(it) },
+                                    onValueChange = { if (it.all { c -> c.isDigit() } && it.length <= 10) screenModel.onDailyLimitChange(it) },
                                     label = { Text("Daily Limit") },
                                     modifier = Modifier.weight(1f),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                     colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                                 )
                             }
@@ -118,9 +121,10 @@ class EditAccountScreen(private val accountId: String) : Screen {
                         is DepositAccount -> {
                             OutlinedTextField(
                                 value = state.interestRate,
-                                onValueChange = { screenModel.onInterestRateChange(it) },
+                                onValueChange = { if ((it.isEmpty() || it.toDoubleOrNull() != null || it == ".") && it.length <= 5) screenModel.onInterestRateChange(it) },
                                 label = { Text("Interest Rate (%)") },
                                 modifier = Modifier.fillMaxWidth(),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                             )
                         }

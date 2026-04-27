@@ -61,7 +61,7 @@ object CategoriesTab : Tab {
 
                         OutlinedTextField(
                             value = state.newCategoryName,
-                            onValueChange = { screenModel.onNameChange(it) },
+                            onValueChange = { if (it.length <= 30) screenModel.onNameChange(it) },
                             placeholder = { Text("Category name...") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)

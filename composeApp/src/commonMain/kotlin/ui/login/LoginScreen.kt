@@ -54,7 +54,7 @@ class LoginScreen(private val onThemeChange: (Boolean) -> Unit = {}) : Screen {
 
                     OutlinedTextField(
                         value = state.login,
-                        onValueChange = { screenModel.onLoginChanged(it) },
+                        onValueChange = { if (it.length <= 25) screenModel.onLoginChanged(it) },
                         placeholder = { Text("Enter login") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
@@ -70,7 +70,7 @@ class LoginScreen(private val onThemeChange: (Boolean) -> Unit = {}) : Screen {
 
                     OutlinedTextField(
                         value = state.pass,
-                        onValueChange = { screenModel.onPasswordChanged(it) },
+                        onValueChange = { if (it.length <= 40) screenModel.onPasswordChanged(it) },
                         placeholder = { Text("Enter password") },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),

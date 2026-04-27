@@ -51,7 +51,7 @@ class RegistrationScreen : Screen {
 
                     OutlinedTextField(
                         value = state.login,
-                        onValueChange = { screenModel.onLoginChanged(it) },
+                        onValueChange = { if (it.length <= 25) screenModel.onLoginChanged(it) },
                         placeholder = { Text("Choose login") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
@@ -66,7 +66,7 @@ class RegistrationScreen : Screen {
 
                     OutlinedTextField(
                         value = state.pass,
-                        onValueChange = { screenModel.onPasswordChanged(it) },
+                        onValueChange = { if (it.length <= 40) screenModel.onPasswordChanged(it) },
                         placeholder = { Text("Create password") },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
@@ -82,7 +82,7 @@ class RegistrationScreen : Screen {
 
                     OutlinedTextField(
                         value = state.confirmPass,
-                        onValueChange = { screenModel.onConfirmPasswordChanged(it) },
+                        onValueChange = { if (it.length <= 40) screenModel.onConfirmPasswordChanged(it) },
                         placeholder = { Text("Repeat password") },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),

@@ -2,7 +2,10 @@ package ui.transactions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -13,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -76,9 +80,10 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedTextField(
                             value = state.amount,
-                            onValueChange = { screenModel.onAmountChange(it) },
+                            onValueChange = { if (it.all { c -> c.isDigit() } && it.length <= 12) screenModel.onAmountChange(it) },
                             label = { Text("Amount") },
                             modifier = Modifier.weight(2f),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                         )
                         // toggle generic mock currency
@@ -98,7 +103,7 @@ class CreateTransactionScreen(private val userId: String) : Screen {
 
                     OutlinedTextField(
                         value = state.note,
-                        onValueChange = { screenModel.onNoteChange(it) },
+                        onValueChange = { if (it.length <= 150) screenModel.onNoteChange(it) },
                         label = { Text("Note / Description") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
@@ -106,13 +111,13 @@ class CreateTransactionScreen(private val userId: String) : Screen {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // account selectors (crude dropdown emulation)
+                    // account selectors (Scrollable row to fix visibility issue)
                     Text("Source Account", style = MaterialTheme.typography.caption)
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        state.availableAccounts.take(3).forEach { acc ->
+                    LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(state.availableAccounts) { acc ->
                             Button(
                                 onClick = { screenModel.onAccountChange(acc.id) },
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier.padding(vertical = 4.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = if (state.selectedAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                 )
@@ -123,11 +128,11 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     if (state.selectedType == TransactionType.TRANSFER) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Target Account", style = MaterialTheme.typography.caption)
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            state.availableAccounts.take(3).forEach { acc ->
+                        LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            items(state.availableAccounts) { acc ->
                                 Button(
                                     onClick = { screenModel.onTargetAccountChange(acc.id) },
-                                    modifier = Modifier.weight(1f),
+                                    modifier = Modifier.padding(vertical = 4.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = if (state.selectedTargetAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                     )
@@ -137,17 +142,20 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     } else {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Category", style = MaterialTheme.typography.caption)
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            val filteredCats = state.availableCategories.filter { it.type == state.selectedType }.take(3)
-                            if (filteredCats.isEmpty()) Text("No categories for this type.", color = Color.Gray)
-                            filteredCats.forEach { cat ->
-                                Button(
-                                    onClick = { screenModel.onCategoryChange(cat.id) },
-                                    modifier = Modifier.weight(1f),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = if (state.selectedCategoryId == cat.id) MaterialTheme.colors.primary else Color.LightGray
-                                    )
-                                ) { Text(cat.name, color = if (state.selectedCategoryId == cat.id) Color.White else Color.Black) }
+                        val filteredCats = state.availableCategories.filter { it.type == state.selectedType }
+                        if (filteredCats.isEmpty()) {
+                            Text("No categories for this type.", color = Color.Gray)
+                        } else {
+                            LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                items(filteredCats) { cat ->
+                                    Button(
+                                        onClick = { screenModel.onCategoryChange(cat.id) },
+                                        modifier = Modifier.padding(vertical = 4.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            backgroundColor = if (state.selectedCategoryId == cat.id) MaterialTheme.colors.primary else Color.LightGray
+                                        )
+                                    ) { Text(cat.name, color = if (state.selectedCategoryId == cat.id) Color.White else Color.Black) }
+                                }
                             }
                         }
                     }
