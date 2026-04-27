@@ -18,12 +18,12 @@ class AccountService (
         return true
     }
 
-    suspend fun getAccountCurrency(accountId: String): CurrencyType? {
+    suspend fun getAccountCurrency(accountId: String?): CurrencyType? {
         return accountRepository.getById(accountId)?.currency
     }
 
     // remove money
-    suspend fun withdraw(accountId: String, amount: Long): Boolean {
+    suspend fun withdraw(accountId: String?, amount: Long): Boolean {
         val account = accountRepository.getById(accountId) ?: return false
 
         if (amount <= 0 || account.balance < amount) {
@@ -36,7 +36,7 @@ class AccountService (
     }
 
     // add money
-    suspend fun deposit(accountId: String, amount: Long): Boolean {
+    suspend fun deposit(accountId: String?, amount: Long): Boolean {
         val account = accountRepository.getById(accountId) ?: return false
 
         if (amount <= 0) {
