@@ -45,6 +45,7 @@ class TransactionService(
             return false
         }
 
+        //TODO: separate method
         // 3. create and save history record
         return try {
             val transferRecord = transactionFactory.create(params)
@@ -75,6 +76,7 @@ class TransactionService(
             return false
         }
 
+        //TODO: separate method
         // 2. create and save history record
         return try {
             val incomeRecord = transactionFactory.create(params)
@@ -104,6 +106,7 @@ class TransactionService(
             return false
         }
 
+        //TODO: separate method
         // 2. create and save history record
         return try {
             val expenseRecord = transactionFactory.create(params)
@@ -122,13 +125,16 @@ class TransactionService(
 
         return try {
             when (transaction) {
-                is Transaction.Income -> {
+                
+                is Transaction.Income -> { //TODO: separate method
+                    
                     val accountCurrency = accountService.getAccountCurrency(transaction.accountId) ?: return false
                     val amountToWithdraw = currencyExchange.convert(transaction.amount, transaction.currency, accountCurrency)
 
                     val withdrawn = accountService.withdraw(transaction.accountId, amountToWithdraw)
                     if (!withdrawn) return false
 
+                    //TODO: separate method
                     try {
                         transactionRepository.delete(transactionId)
                         true
@@ -138,7 +144,7 @@ class TransactionService(
                         false
                     }
                 }
-                is Transaction.Expense -> {
+                is Transaction.Expense -> { //TODO: separate method
                     val accountCurrency = accountService.getAccountCurrency(transaction.accountId) ?: return false
                     val amountToDeposit = currencyExchange.convert(transaction.amount, transaction.currency, accountCurrency)
 
@@ -147,6 +153,7 @@ class TransactionService(
                         return false
                     }
 
+                    //TODO: separate method
                     try {
                         transactionRepository.delete(transactionId)
                         true
@@ -156,7 +163,7 @@ class TransactionService(
                         false
                     }
                 }
-                is Transaction.Transfer -> {
+                is Transaction.Transfer -> {//TODO: separate method
                     val sourceCurrency = accountService.getAccountCurrency(transaction.accountId) ?: return false
                     val targetCurrency = accountService.getAccountCurrency(transaction.targetAccountId) ?: return false
 
@@ -173,6 +180,7 @@ class TransactionService(
                         return false
                     }
 
+                    //TODO: separate method
                     try {
                         transactionRepository.delete(transactionId)
                         true
