@@ -9,6 +9,8 @@ import AppDependencies
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
 import app.App
+import kotlinx.coroutines.runBlocking
+import utils.TestDataSeeder
 import java.io.File
 
 fun main() {
@@ -25,6 +27,11 @@ fun main() {
 
     // 3. pass database to DI container
     AppDependencies.init(database)
+
+    // 4. trigger the data seeder synchronously before ui mounts
+    runBlocking {
+        TestDataSeeder.seed()
+    }
 
     // 4. launch UI
     application {

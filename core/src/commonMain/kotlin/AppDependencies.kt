@@ -19,11 +19,15 @@ object AppDependencies {
     private val categoryDao by lazy { database.categoryDao() }
     private val transactionDao by lazy { database.transactionDao() }
 
+    // --- Unit Of Work ---
+    val unitOfWork: UnitOfWork by lazy { RoomUnitOfWork(database) }
+
     // --- Repositories ---
     val userRepository: UserRepository by lazy { UserRepositoryImpl(userDao) }
     val accountRepository: AccountRepository by lazy { AccountRepositoryImpl(accountDao) }
     val categoryRepository: CategoryRepository by lazy { CategoryRepositoryImpl(categoryDao) }
     val transactionRepository: TransactionRepository by lazy { TransactionRepositoryImpl(transactionDao) }
+
     // --- Factories ---
     private val userFactory by lazy { UserFactory() }
     private val accountFactory by lazy { AccountFactory() }
@@ -52,6 +56,7 @@ object AppDependencies {
 
     val transactionService: TransactionService by lazy {
         TransactionService(
+            unitOfWork = unitOfWork,
             transactionRepository = transactionRepository,
             accountService = accountService,
             transactionFactory = transactionFactory,

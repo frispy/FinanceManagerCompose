@@ -15,6 +15,7 @@ class CategoryRepositoryImpl(private val dao: CategoryDao): CategoryRepository {
     override suspend fun getById(id: String): TransactionCategory? {
         return dao.getById(id)?.toDomain()
     }
+
     override suspend fun findByName(name: String): TransactionCategory? {
         return dao.findByName(name)?.toDomain()
     }
@@ -28,6 +29,6 @@ class CategoryRepositoryImpl(private val dao: CategoryDao): CategoryRepository {
     }
 
     override suspend fun delete(id: String) {
-        dao.delete(id)
+        dao.deleteById(id)
     }
 }

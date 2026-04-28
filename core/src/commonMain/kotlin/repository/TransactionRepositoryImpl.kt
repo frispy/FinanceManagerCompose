@@ -1,6 +1,5 @@
 package repository
 
-
 import data.dao.TransactionDao
 import data.entity.toDomain
 import data.entity.toEntity
@@ -36,6 +35,6 @@ class TransactionRepositoryImpl(private val dao: TransactionDao): TransactionRep
     }
 
     override suspend fun delete(id: String) {
-        dao.delete(id)
+        dao.deleteById(id)
     }
 }

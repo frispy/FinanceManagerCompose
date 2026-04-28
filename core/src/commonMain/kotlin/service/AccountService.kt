@@ -22,6 +22,11 @@ class AccountService (
         return true
     }
 
+    // fetch raw domain object from repo natively to assist calculations
+    suspend fun getAccountById(accountId: String?): Account? {
+        return accountRepository.getById(accountId)
+    }
+
     suspend fun getAccountCurrency(accountId: String?): CurrencyType? {
         return accountRepository.getById(accountId ?: "")?.currency
     }

@@ -67,7 +67,8 @@ object TransactionsTab : Tab {
                 Text("No transactions found.", color = Color.Gray)
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
-                    items(state.transactions) { tx ->
+                    // displaying items sorted inversely by date makes the newest entries appear at the top
+                    items(state.transactions.sortedByDescending { it.base.date }) { tx ->
                         RemovableTransactionRow(
                             tx = tx,
                             categories = state.categories,
@@ -83,7 +84,7 @@ object TransactionsTab : Tab {
     @Composable
     fun RemovableTransactionRow(tx: Transaction, categories: List<TransactionCategory>, onDelete: () -> Unit) {
         val category = categories.find { it.id == tx.base.categoryId }
-        val iconName = category?.iconName ?: "Category" // display icon
+        val iconName = category?.iconName ?: "Category"
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
@@ -100,7 +101,12 @@ object TransactionsTab : Tab {
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
-                    Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                    // formatted date field
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text("•", color = Color.LightGray, style = MaterialTheme.typography.caption)
+                        Text(tx.base.date.substringBefore(".").replace("T", " "), color = Color.Gray, style = MaterialTheme.typography.caption)
+                    }
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {

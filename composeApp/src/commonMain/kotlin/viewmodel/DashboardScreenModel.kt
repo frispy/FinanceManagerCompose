@@ -2,10 +2,12 @@ package viewmodel
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import model.account.Account
 import model.transaction.Transaction
 import model.transaction.TransactionCategory
@@ -17,7 +19,8 @@ data class DashboardState(
     val isLoading: Boolean = true,
     val topAccounts: List<Account> = emptyList(),
     val recentTransactions: List<Transaction> = emptyList(),
-    val activeCategories: List<TransactionCategory> = emptyList()
+    val activeCategories: List<TransactionCategory> = emptyList(),
+    val currentDateTime: String = ""
 )
 
 class DashboardScreenModel(
@@ -32,11 +35,26 @@ class DashboardScreenModel(
 
     init {
         loadDashboardData()
+        startClock()
+    }
+
+    // localized clock updater formatting ISO strings natively to keep it readable
+    private fun startClock() {
+        screenModelScope.launch {
+            while (true) {
+                val rawTime = kotlin.time.Clock.System.now().toString()
+                // strips milliseconds and replaces the "T" divider with a standard space
+                val formattedTime = rawTime.substringBefore(".").replace("T", " ")
+
+                _state.update { it.copy(currentDateTime = formattedTime) }
+                delay(1000) // tick every second
+            }
+        }
     }
 
     private fun loadDashboardData() {
         screenModelScope.launch {
-            // observing flows allows real-time UI updates when DB changes
+            // observing flows allows real-time ui updates when db changes
             launch {
                 accountRepository.getAllAccountsFlow().collect { allAccs ->
                     _state.update {

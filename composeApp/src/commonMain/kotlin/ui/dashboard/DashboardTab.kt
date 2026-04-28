@@ -49,11 +49,23 @@ object DashboardTab : Tab {
         val state by screenModel.state.collectAsState()
 
         Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
-            Text(
-                text = "Welcome, ${user.login}",
-                style = MaterialTheme.typography.h4,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Welcome, ${user.login}",
+                    style = MaterialTheme.typography.h4,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = state.currentDateTime,
+                    style = MaterialTheme.typography.subtitle1,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -171,7 +183,7 @@ object DashboardTab : Tab {
     @Composable
     fun TransactionRow(tx: Transaction, categories: List<TransactionCategory>) {
         val category = categories.find { it.id == tx.base.categoryId }
-        val iconName = category?.iconName ?: "Category" // get icon
+        val iconName = category?.iconName ?: "Category"
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
@@ -187,7 +199,12 @@ object DashboardTab : Tab {
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
-                    Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                    // integrated the date visually under the transaction label
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text("•", color = Color.LightGray, style = MaterialTheme.typography.caption)
+                        Text(tx.base.date.substringBefore(".").replace("T", " "), color = Color.Gray, style = MaterialTheme.typography.caption)
+                    }
                 }
             }
             Text(

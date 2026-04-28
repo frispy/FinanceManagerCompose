@@ -25,6 +25,6 @@ class AccountRepositoryImpl(private val dao: AccountDao): AccountRepository {
     }
 
     override suspend fun delete(id: String) {
-        dao.delete(id)
+        dao.deleteById(id)
     }
 }
