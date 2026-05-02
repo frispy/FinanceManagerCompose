@@ -19,8 +19,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import model.account.Account
-import model.account.BankAccount
+import models.AccountUiModel
 import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
 import viewmodel.AccountsScreenModel
@@ -82,7 +81,7 @@ object AccountsTab : Tab {
     }
 
     @Composable
-    fun DetailedAccountCard(account: Account, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
+    fun DetailedAccountCard(account: AccountUiModel, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
         Card(
             modifier = Modifier.fillMaxWidth().height(400.dp),
             backgroundColor = MaterialTheme.colors.surface,
@@ -90,12 +89,11 @@ object AccountsTab : Tab {
             elevation = 0.dp
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
-                Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
-                val accName = if (account is BankAccount) account.bankName else account.name
-                Text(accName, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                Text(account.accountTypeLabel, color = Color.Gray, style = MaterialTheme.typography.caption)
+                Text(account.displayName, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+                Text(account.displayBalance, style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(account.note.ifBlank { "No specific notes provided." }, color = Color.Gray, style = MaterialTheme.typography.body2)

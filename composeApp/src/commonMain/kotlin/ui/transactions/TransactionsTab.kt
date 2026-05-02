@@ -20,8 +20,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import model.transaction.Transaction
-import model.transaction.TransactionCategory
+import models.TransactionUiModel
 import ui.theme.LocalCurrentUser
 import viewmodel.TransactionsScreenModel
 
@@ -67,11 +66,9 @@ object TransactionsTab : Tab {
                 Text("No transactions found.", color = Color.Gray)
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
-                    // displaying items sorted inversely by date makes the newest entries appear at the top
-                    items(state.transactions.sortedByDescending { it.base.date }) { tx ->
+                    items(state.transactions.sortedByDescending { it.rawDate }) { tx ->
                         RemovableTransactionRow(
                             tx = tx,
-                            categories = state.categories,
                             onDelete = { screenModel.deleteTransaction(tx.id) }
                         )
                         Divider(color = Color.LightGray)
@@ -82,10 +79,7 @@ object TransactionsTab : Tab {
     }
 
     @Composable
-    fun RemovableTransactionRow(tx: Transaction, categories: List<TransactionCategory>, onDelete: () -> Unit) {
-        val category = categories.find { it.id == tx.base.categoryId }
-        val iconName = category?.iconName ?: "Category"
-
+    fun RemovableTransactionRow(tx: TransactionUiModel, onDelete: () -> Unit) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -96,24 +90,23 @@ object TransactionsTab : Tab {
                     modifier = Modifier.size(40.dp).background(Color.LightGray, RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(ui.utils.IconMapper.getIconByName(iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                    Icon(ui.utils.IconMapper.getIconByName(tx.iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
-                    // formatted date field
+                    Text(tx.note, fontWeight = FontWeight.Bold)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text(tx.typeLabel, color = Color.Gray, style = MaterialTheme.typography.caption)
                         Text("•", color = Color.LightGray, style = MaterialTheme.typography.caption)
-                        Text(tx.base.date.substringBefore(".").replace("T", " "), color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text(tx.displayDate, color = Color.Gray, style = MaterialTheme.typography.caption)
                     }
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "${if (tx is Transaction.Expense) "-" else "+"}${tx.base.amount} ${tx.base.currency}",
+                    text = tx.displayAmount,
                     fontWeight = FontWeight.Bold,
-                    color = if (tx is Transaction.Expense) Color.Black else Color(0xFF4CAF50)
+                    color = if (tx.isExpense) Color.Black else Color(0xFF4CAF50)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 IconButton(onClick = onDelete) {

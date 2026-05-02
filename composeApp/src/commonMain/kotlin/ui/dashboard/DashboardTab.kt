@@ -20,10 +20,8 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import model.account.Account
-import model.account.BankAccount
-import model.transaction.Transaction
-import model.transaction.TransactionCategory
+import models.AccountUiModel
+import models.TransactionUiModel
 import ui.accounts.AccountsTab
 import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
@@ -80,7 +78,7 @@ object DashboardTab : Tab {
                         AccountCard(
                             account = account,
                             modifier = Modifier.weight(1f),
-                            onClick = { tabNavigator.current = AccountsTab } // navigation
+                            onClick = { tabNavigator.current = AccountsTab }
                         )
                     }
                 }
@@ -99,7 +97,7 @@ object DashboardTab : Tab {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text("Recent Transactions", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
                             Button(
-                                onClick = { tabNavigator.current = TransactionsTab }, // navigation
+                                onClick = { tabNavigator.current = TransactionsTab },
                                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                             ) {
                                 Text("View all", color = Color.White)
@@ -111,7 +109,7 @@ object DashboardTab : Tab {
                         } else {
                             LazyColumn {
                                 items(state.recentTransactions) { tx ->
-                                    TransactionRow(tx, state.activeCategories) // pass categories for icons
+                                    TransactionRow(tx)
                                 }
                             }
                         }
@@ -151,7 +149,7 @@ object DashboardTab : Tab {
     }
 
     @Composable
-    fun AccountCard(account: Account, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    fun AccountCard(account: AccountUiModel, modifier: Modifier = Modifier, onClick: () -> Unit) {
         Card(
             modifier = modifier.height(160.dp),
             backgroundColor = MaterialTheme.colors.surface,
@@ -160,11 +158,10 @@ object DashboardTab : Tab {
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.SpaceBetween) {
                 Column {
-                    Text(account.accountType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
-                    val accName = if (account is BankAccount) account.bankName else account.name
-                    Text(accName, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                    Text(account.accountTypeLabel, color = Color.Gray, style = MaterialTheme.typography.caption)
+                    Text(account.displayName, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
                 }
-                Text("${account.currency} ${account.balance}", style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+                Text(account.displayBalance, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
                 Button(
                     onClick = onClick,
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
@@ -181,10 +178,7 @@ object DashboardTab : Tab {
     }
 
     @Composable
-    fun TransactionRow(tx: Transaction, categories: List<TransactionCategory>) {
-        val category = categories.find { it.id == tx.base.categoryId }
-        val iconName = category?.iconName ?: "Category"
-
+    fun TransactionRow(tx: TransactionUiModel) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -194,23 +188,22 @@ object DashboardTab : Tab {
                     modifier = Modifier.size(40.dp).background(Color.White, RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(ui.utils.IconMapper.getIconByName(iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
+                    Icon(ui.utils.IconMapper.getIconByName(tx.iconName), contentDescription = null, tint = MaterialTheme.colors.primary)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(tx.base.note.ifBlank { "Transaction" }, fontWeight = FontWeight.Bold)
-                    // integrated the date visually under the transaction label
+                    Text(tx.note, fontWeight = FontWeight.Bold)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(tx.transactionType.name, color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text(tx.typeLabel, color = Color.Gray, style = MaterialTheme.typography.caption)
                         Text("•", color = Color.LightGray, style = MaterialTheme.typography.caption)
-                        Text(tx.base.date.substringBefore(".").replace("T", " "), color = Color.Gray, style = MaterialTheme.typography.caption)
+                        Text(tx.displayDate, color = Color.Gray, style = MaterialTheme.typography.caption)
                     }
                 }
             }
             Text(
-                text = "${if (tx is Transaction.Expense) "-" else "+"}${tx.base.amount} ${tx.base.currency}",
+                text = tx.displayAmount,
                 fontWeight = FontWeight.Bold,
-                color = if (tx is Transaction.Expense) Color.Black else Color(0xFF4CAF50)
+                color = if (tx.isExpense) Color.Black else Color(0xFF4CAF50)
             )
         }
     }

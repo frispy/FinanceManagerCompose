@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import models.UserUiModel
+import models.toUiModel
 import service.UserService
 
 data class LoginState(
@@ -25,7 +27,7 @@ class LoginScreenModel(
     fun onLoginChanged(login: String) = _state.update { it.copy(login = login) }
     fun onPasswordChanged(pass: String) = _state.update { it.copy(pass = pass) }
 
-    fun login(onSuccess: (model.user.User) -> Unit) {
+    fun login(onSuccess: (UserUiModel) -> Unit) {
         screenModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
 
@@ -33,7 +35,7 @@ class LoginScreenModel(
 
             if (user != null) {
                 _state.update { it.copy(isLoading = false) }
-                onSuccess(user)
+                onSuccess(user.toUiModel())
             } else {
                 _state.update { it.copy(isLoading = false, error = "Invalid login or password") }
             }

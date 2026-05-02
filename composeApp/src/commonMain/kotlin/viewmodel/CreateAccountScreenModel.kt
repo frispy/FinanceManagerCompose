@@ -11,13 +11,13 @@ import model.enum.CurrencyType
 import model.params.AccountCreationParams
 import service.AccountService
 
+
 data class CreateAccountState(
     val name: String = "",
     val note: String = "",
     val balance: String = "",
     val currency: CurrencyType = CurrencyType.USD,
     val accountType: AccountType = AccountType.BANK,
-
     // specific fields
     val bankName: String = "",
     val cashLocation: String = "",

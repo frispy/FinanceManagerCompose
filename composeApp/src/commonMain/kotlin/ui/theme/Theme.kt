@@ -5,6 +5,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import model.user.User
+import models.UserUiModel
 
 // default gray theme based on your mockups
 val DefaultGrayColors = lightColors(
@@ -31,6 +32,6 @@ val BlueColors = lightColors(
 )
 
 // composition local to pass current logged in user globally to tabs
-val LocalCurrentUser = staticCompositionLocalOf<User> {
+val LocalCurrentUser = staticCompositionLocalOf<UserUiModel> {
     error("user not provided")
 }

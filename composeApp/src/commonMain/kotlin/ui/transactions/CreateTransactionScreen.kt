@@ -62,7 +62,6 @@ class CreateTransactionScreen(private val userId: String) : Screen {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    // type tabs
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         TransactionType.values().forEach { type ->
                             Button(
@@ -86,7 +85,6 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                         )
-                        // toggle generic mock currency
                         Button(
                             onClick = {
                                 val next = if (state.selectedCurrency == CurrencyType.USD) CurrencyType.EUR else CurrencyType.USD
@@ -111,7 +109,6 @@ class CreateTransactionScreen(private val userId: String) : Screen {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // account selectors (Scrollable row to fix visibility issue)
                     Text("Source Account", style = MaterialTheme.typography.caption)
                     LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         items(state.availableAccounts) { acc ->
@@ -121,7 +118,7 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = if (state.selectedAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                 )
-                            ) { Text(acc.name, color = if (state.selectedAccountId == acc.id) Color.White else Color.Black) }
+                            ) { Text(acc.displayName, color = if (state.selectedAccountId == acc.id) Color.White else Color.Black) }
                         }
                     }
 
@@ -136,7 +133,7 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = if (state.selectedTargetAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                     )
-                                ) { Text(acc.name, color = if (state.selectedTargetAccountId == acc.id) Color.White else Color.Black) }
+                                ) { Text(acc.displayName, color = if (state.selectedTargetAccountId == acc.id) Color.White else Color.Black) }
                             }
                         }
                     } else {

@@ -6,24 +6,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import model.account.Account
 import model.account.BankAccount
 import model.account.CashAccount
 import model.account.DepositAccount
+import model.enum.AccountType
 import repository.AccountRepository
 import service.AccountService
 
 data class EditAccountState(
-    val account: Account? = null,
+    val accountType: AccountType? = null,
     val name: String = "",
     val note: String = "",
-
-    // specific fields mapped
     val bankName: String = "",
     val cashLocation: String = "",
     val dailyLimit: String = "",
     val interestRate: String = "",
-
     val isLoading: Boolean = true,
     val error: String? = null
 )
@@ -43,7 +40,7 @@ class EditAccountScreenModel(
             if (acc != null) {
                 _state.update {
                     it.copy(
-                        account = acc,
+                        accountType = acc.accountType,
                         name = acc.name,
                         note = acc.note,
                         bankName = if (acc is BankAccount) acc.bankName else "",
@@ -67,18 +64,21 @@ class EditAccountScreenModel(
     fun onInterestRateChange(rate: String) = _state.update { it.copy(interestRate = rate) }
 
     fun updateAccount(onSuccess: () -> Unit) {
-        val st = _state.value
-        val acc = st.account ?: return
-
-        // apply fields based on class instance
-        val updatedAcc = when (acc) {
-            is BankAccount -> acc.copy(name = st.name, note = st.note, bankName = st.bankName)
-            is CashAccount -> acc.copy(name = st.name, note = st.note, cashLocation = st.cashLocation, dailyLimit = st.dailyLimit.toLongOrNull() ?: 0L)
-            is DepositAccount -> acc.copy(name = st.name, note = st.note, interestRate = st.interestRate.toDoubleOrNull() ?: 0.0)
-        }
-
         screenModelScope.launch {
             _state.update { it.copy(isLoading = true) }
+            val acc = accountRepository.getById(accountId)
+            if (acc == null) {
+                _state.update { it.copy(isLoading = false, error = "account not found") }
+                return@launch
+            }
+
+            val st = _state.value
+            val updatedAcc = when (acc) {
+                is BankAccount -> acc.copy(name = st.name, note = st.note, bankName = st.bankName)
+                is CashAccount -> acc.copy(name = st.name, note = st.note, cashLocation = st.cashLocation, dailyLimit = st.dailyLimit.toLongOrNull() ?: 0L)
+                is DepositAccount -> acc.copy(name = st.name, note = st.note, interestRate = st.interestRate.toDoubleOrNull() ?: 0.0)
+            }
+
             accountService.updateAccount(updatedAcc)
             _state.update { it.copy(isLoading = false) }
             onSuccess()

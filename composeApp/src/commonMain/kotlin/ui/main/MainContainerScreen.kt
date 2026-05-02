@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,7 +20,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import model.user.User
+import models.UserUiModel
 import ui.accounts.AccountsTab
 import ui.categories.CategoriesTab
 import ui.dashboard.DashboardTab
@@ -31,7 +30,7 @@ import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
 
 class MainContainerScreen(
-    private val user: User,
+    private val user: UserUiModel,
     private val onThemeChange: (Boolean) -> Unit
 ) : Screen {
 

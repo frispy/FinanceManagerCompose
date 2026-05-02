@@ -6,11 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import model.account.Account
 import model.enum.CurrencyType
 import model.enum.TransactionType
 import model.params.TransactionCreationParams
-import model.transaction.TransactionCategory
+import models.AccountUiModel
+import models.CategoryUiModel
+import models.toUiModel
 import repository.AccountRepository
 import repository.CategoryRepository
 import service.TransactionService
@@ -20,14 +21,11 @@ data class CreateTransactionState(
     val amount: String = "",
     val note: String = "",
     val selectedCurrency: CurrencyType = CurrencyType.USD,
-
     val selectedAccountId: String = "",
     val selectedTargetAccountId: String = "",
     val selectedCategoryId: String = "",
-
-    val availableAccounts: List<Account> = emptyList(),
-    val availableCategories: List<TransactionCategory> = emptyList(),
-
+    val availableAccounts: List<AccountUiModel> = emptyList(),
+    val availableCategories: List<CategoryUiModel> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )
@@ -46,21 +44,22 @@ class CreateTransactionScreenModel(
         screenModelScope.launch {
             launch {
                 accountRepository.getAllAccountsFlow().collect { accounts ->
-                    val userAccounts = accounts.filter { it.userId == userId }
+                    val userAccounts = accounts.filter { it.userId == userId }.map { it.toUiModel() }
                     _state.update {
                         it.copy(
                             availableAccounts = userAccounts,
-                            selectedAccountId = if (it.selectedAccountId.isEmpty()) userAccounts.firstOrNull()?.id ?: "" else it.selectedAccountId
+                            selectedAccountId = it.selectedAccountId.ifEmpty { userAccounts.firstOrNull()?.id ?: "" }
                         )
                     }
                 }
             }
             launch {
                 categoryRepository.getAllCategoriesFlow().collect { categories ->
+                    val uiCats = categories.map { it.toUiModel() }
                     _state.update {
                         it.copy(
-                            availableCategories = categories,
-                            selectedCategoryId = if (it.selectedCategoryId.isEmpty()) categories.firstOrNull()?.id ?: "" else it.selectedCategoryId
+                            availableCategories = uiCats,
+                            selectedCategoryId = it.selectedCategoryId.ifEmpty { uiCats.firstOrNull()?.id ?: "" }
                         )
                     }
                 }
@@ -85,7 +84,6 @@ class CreateTransactionScreenModel(
             return
         }
 
-        // same account transfer forbidden
         if (st.selectedType == TransactionType.TRANSFER && st.selectedAccountId == st.selectedTargetAccountId) {
             _state.update { it.copy(error = "Source and Target accounts must be different") }
             return
@@ -97,7 +95,7 @@ class CreateTransactionScreenModel(
             amount = parsedAmount,
             currency = st.selectedCurrency,
             date = "",
-            categoryId = st.selectedCategoryId.ifBlank { null }, // Конвертуємо пустоту в null
+            categoryId = st.selectedCategoryId.ifBlank { null },
             note = st.note
         )
 

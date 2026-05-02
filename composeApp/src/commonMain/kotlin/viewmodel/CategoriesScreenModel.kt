@@ -8,17 +8,17 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import model.enum.TransactionType
 import model.transaction.TransactionCategory
+import models.CategoryUiModel
+import models.toUiModel
 import repository.CategoryRepository
 import service.CategoryService
 
 data class CategoriesState(
-    val categories: List<TransactionCategory> = emptyList(),
-
-    // form fields
+    val categories: List<CategoryUiModel> = emptyList(),
     val editingCategoryId: String? = null,
     val newCategoryName: String = "",
     val newCategoryType: TransactionType = TransactionType.EXPENSE,
-    val newCategoryIcon: String = "Home" // default
+    val newCategoryIcon: String = "Home"
 )
 
 class CategoriesScreenModel(
@@ -32,7 +32,7 @@ class CategoriesScreenModel(
     init {
         screenModelScope.launch {
             categoryRepository.getAllCategoriesFlow().collect { list ->
-                _state.update { it.copy(categories = list) }
+                _state.update { it.copy(categories = list.map { cat -> cat.toUiModel() }) }
             }
         }
     }
@@ -41,7 +41,7 @@ class CategoriesScreenModel(
     fun onTypeChange(type: TransactionType) = _state.update { it.copy(newCategoryType = type) }
     fun onIconChange(iconName: String) = _state.update { it.copy(newCategoryIcon = iconName) }
 
-    fun startEditing(category: TransactionCategory) {
+    fun startEditing(category: CategoryUiModel) {
         _state.update {
             it.copy(
                 editingCategoryId = category.id,

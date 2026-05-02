@@ -23,7 +23,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import model.enum.TransactionType
-import model.transaction.TransactionCategory
+import models.CategoryUiModel
 import ui.utils.IconMapper
 import viewmodel.CategoriesScreenModel
 
@@ -170,7 +170,7 @@ object CategoriesTab : Tab {
     }
 
     @Composable
-    fun CategoryCard(category: TransactionCategory, onEdit: () -> Unit, onDelete: () -> Unit) {
+    fun CategoryCard(category: CategoryUiModel, onEdit: () -> Unit, onDelete: () -> Unit) {
         Card(
             modifier = Modifier.fillMaxWidth().height(80.dp),
             backgroundColor = MaterialTheme.colors.surface,

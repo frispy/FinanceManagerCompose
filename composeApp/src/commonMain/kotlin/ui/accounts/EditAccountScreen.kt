@@ -20,9 +20,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import model.account.BankAccount
-import model.account.CashAccount
-import model.account.DepositAccount
+import model.enum.AccountType
 import viewmodel.EditAccountScreenModel
 
 class EditAccountScreen(private val accountId: String) : Screen {
@@ -52,7 +50,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
                     return@Card
                 }
 
-                if (state.account == null) {
+                if (state.accountType == null) {
                     Text("Account not found.", modifier = Modifier.padding(32.dp))
                     return@Card
                 }
@@ -88,9 +86,8 @@ class EditAccountScreen(private val accountId: String) : Screen {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // specific fields matching class type
-                    when (state.account) {
-                        is BankAccount -> {
+                    when (state.accountType) {
+                        AccountType.BANK -> {
                             OutlinedTextField(
                                 value = state.bankName,
                                 onValueChange = { if (it.length <= 50) screenModel.onBankNameChange(it) },
@@ -99,7 +96,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
                                 colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                             )
                         }
-                        is CashAccount -> {
+                        AccountType.CASH -> {
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 OutlinedTextField(
                                     value = state.cashLocation,
@@ -118,7 +115,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
                                 )
                             }
                         }
-                        is DepositAccount -> {
+                        AccountType.DEPOSIT -> {
                             OutlinedTextField(
                                 value = state.interestRate,
                                 onValueChange = { if ((it.isEmpty() || it.toDoubleOrNull() != null || it == ".") && it.length <= 5) screenModel.onInterestRateChange(it) },

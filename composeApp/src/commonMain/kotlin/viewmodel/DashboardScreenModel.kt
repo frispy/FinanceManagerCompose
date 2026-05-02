@@ -5,21 +5,22 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import model.account.Account
-import model.transaction.Transaction
-import model.transaction.TransactionCategory
+import models.AccountUiModel
+import models.CategoryUiModel
+import models.TransactionUiModel
+import models.toUiModel
 import repository.AccountRepository
 import repository.CategoryRepository
 import repository.TransactionRepository
 
 data class DashboardState(
     val isLoading: Boolean = true,
-    val topAccounts: List<Account> = emptyList(),
-    val recentTransactions: List<Transaction> = emptyList(),
-    val activeCategories: List<TransactionCategory> = emptyList(),
+    val topAccounts: List<AccountUiModel> = emptyList(),
+    val recentTransactions: List<TransactionUiModel> = emptyList(),
+    val activeCategories: List<CategoryUiModel> = emptyList(),
     val currentDateTime: String = ""
 )
 
@@ -47,7 +48,7 @@ class DashboardScreenModel(
                 val formattedTime = rawTime.substringBefore(".").replace("T", " ")
 
                 _state.update { it.copy(currentDateTime = formattedTime) }
-                delay(1000) // tick every second
+                delay(1000)
             }
         }
     }
@@ -59,22 +60,27 @@ class DashboardScreenModel(
                 accountRepository.getAllAccountsFlow().collect { allAccs ->
                     _state.update {
                         it.copy(
-                            topAccounts = allAccs.filter { acc -> acc.userId == userId }.take(3),
+                            topAccounts = allAccs.filter { acc -> acc.userId == userId }.take(3).map { acc -> acc.toUiModel() },
                             isLoading = false
                         )
                     }
                 }
             }
             launch {
-                transactionRepository.getAllTransactionsFlow().collect { allTrans ->
-                    _state.update {
-                        it.copy(recentTransactions = allTrans.filter { tr -> tr.base.userId == userId }.take(5))
-                    }
+                combine(
+                    transactionRepository.getAllTransactionsFlow(),
+                    categoryRepository.getAllCategoriesFlow()
+                ) { allTrans, allCats ->
+                    allTrans.filter { tr -> tr.base.userId == userId }
+                        .take(5)
+                        .map { tr -> tr.toUiModel(allCats) }
+                }.collect { mappedTrans ->
+                    _state.update { it.copy(recentTransactions = mappedTrans) }
                 }
             }
             launch {
                 categoryRepository.getAllCategoriesFlow().collect { allCats ->
-                    _state.update { it.copy(activeCategories = allCats.take(6)) }
+                    _state.update { it.copy(activeCategories = allCats.take(6).map { cat -> cat.toUiModel() }) }
                 }
             }
         }
