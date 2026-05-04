@@ -1,9 +1,12 @@
 package models
 
+import model.analytics.CategoryAnalyticItem
+import model.analytics.TimeAnalyticItem
 import model.account.Account
 import model.account.BankAccount
 import model.transaction.Transaction
 import model.transaction.TransactionCategory
+import kotlin.math.roundToInt
 import model.user.User
 
 fun Account.toUiModel(): AccountUiModel {
@@ -47,5 +50,25 @@ fun User.toUiModel(): UserUiModel {
     return UserUiModel(
         id = this.id,
         login = this.login
+    )
+}
+
+fun CategoryAnalyticItem.toUiModel(currencyCode: String): CategoryAnalyticUiItem {
+    val percentInt = (this.percentage * 100).roundToInt()
+    return CategoryAnalyticUiItem(
+        categoryId = this.categoryId,
+        categoryName = this.categoryName,
+        iconName = this.iconName,
+        displayAmount = "${this.totalAmount} $currencyCode",
+        displayPercentage = "$percentInt%",
+        progress = this.percentage
+    )
+}
+
+fun TimeAnalyticItem.toUiModel(currencyCode: String): TimeAnalyticUiItem {
+    return TimeAnalyticUiItem(
+        periodLabel = this.periodLabel,
+        displayIncome = "+ ${this.totalIncome} $currencyCode",
+        displayExpense = "- ${this.totalExpense} $currencyCode"
     )
 }

@@ -5,7 +5,7 @@ data class TransactionUiModel(
     val note: String,
     val displayAmount: String,
     val displayDate: String,
-    val rawDate: String, // Потрібно для сортування списку
+    val rawDate: String,
     val typeLabel: String,
     val categoryId: String?,
     val iconName: String,

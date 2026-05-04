@@ -22,6 +22,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import models.UserUiModel
 import ui.accounts.AccountsTab
+import ui.analytics.AnalyticsTab
 import ui.categories.CategoriesTab
 import ui.dashboard.DashboardTab
 import ui.login.LoginScreen
@@ -97,13 +98,7 @@ class MainContainerScreen(
             SidebarItem("Transactions", TransactionsTab, tabNavigator)
             SidebarItem("Accounts", AccountsTab, tabNavigator)
             SidebarItem("Categories", CategoriesTab, tabNavigator)
-
-            // disabled item per instructions
-            Text(
-                text = "Analytics",
-                color = Color.Gray,
-                modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)
-            )
+            SidebarItem("Analytics", AnalyticsTab, tabNavigator)
 
             Spacer(modifier = Modifier.weight(1f))
 

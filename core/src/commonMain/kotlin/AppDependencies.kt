@@ -50,6 +50,10 @@ object AppDependencies {
         )
     }
 
+    val analyticsService: AnalyticsService by lazy {
+        AnalyticsService(currencyExchangeService)
+    }
+
     val categoryService: CategoryService by lazy {
         CategoryService(categoryRepository)
     }
