@@ -1,3 +1,4 @@
+// --- ./composeApp/src/desktopMain/kotlin/utils/TestDataSeeder.kt ---
 package utils
 
 import AppDependencies
@@ -17,16 +18,13 @@ object TestDataSeeder {
         val categoryRepository = AppDependencies.categoryRepository
         val accountRepository = AppDependencies.accountRepository
 
-        // verify if the test user already exists to prevent duplicate seeding on every run
         if (userService.login("tester", "tester") != null) {
             return
         }
 
-        // 1. generate the test user
         userService.register(UserCreationParams(login = "tester", pass = "tester"))
         val user = userService.login("tester", "tester") ?: return
 
-        // 2. dynamically create 15 essential categories
         val categoriesData = listOf(
             Triple("Groceries", TransactionType.EXPENSE, "ShoppingCart"),
             Triple("Salary", TransactionType.INCOME, "AccountBalanceWallet"),
@@ -49,11 +47,9 @@ object TestDataSeeder {
             categoryService.createCategory(name, type, icon)
         }
 
-        // fetch created categories to map their auto-generated UUIDs
         val allCats = categoryRepository.getAllCategoriesFlow().first()
         fun catId(name: String) = allCats.firstOrNull { it.name == name }?.id
 
-        // 3. create 5 distinct accounts
         accountService.createAccount(AccountCreationParams.Bank(user.id, "Main Bank", 5000, CurrencyType.USD, "Primary checking", "Chase Bank"))
         accountService.createAccount(AccountCreationParams.Cash(user.id, "Cash Wallet", 200, CurrencyType.USD, "Pocket money", "Wallet", 50))
         accountService.createAccount(AccountCreationParams.Deposit(user.id, "Savings", 10000, CurrencyType.EUR, "Long term savings", 4.5))
@@ -65,32 +61,29 @@ object TestDataSeeder {
         val businessAcc = allAccs.firstOrNull { it.name == "Business Account" } ?: return
         val savingsAcc = allAccs.firstOrNull { it.name == "Savings" } ?: return
 
-        // 4. seed initial transactions to populate the dashboard history
-        transactionService.income(
-            TransactionCreationParams.Income(
-                TransactionCreationParams.Common(user.id, mainBank.id, 3000, CurrencyType.USD, "", catId("Salary"), "Monthly Salary")
-            )
-        )
-        transactionService.income(
-            TransactionCreationParams.Income(
-                TransactionCreationParams.Common(user.id, businessAcc.id, 8000, CurrencyType.UAH, "", catId("Freelance"), "Upwork Project")
-            )
-        )
-        transactionService.expense(
-            TransactionCreationParams.Expense(
-                TransactionCreationParams.Common(user.id, mainBank.id, 150, CurrencyType.USD, "", catId("Groceries"), "Walmart Run")
-            )
-        )
-        transactionService.expense(
-            TransactionCreationParams.Expense(
-                TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "", catId("Rent"), "Apartment Rent")
-            )
-        )
-        transactionService.transfer(
-            TransactionCreationParams.Transfer(
-                common = TransactionCreationParams.Common(user.id, mainBank.id, 500, CurrencyType.USD, "", null, "To Savings"),
-                targetAccountId = savingsAcc.id
-            )
-        )
+        // --- MONTH 1: JANUARY ---
+        transactionService.income(TransactionCreationParams.Income(TransactionCreationParams.Common(user.id, mainBank.id, 3500, CurrencyType.USD, "2026-01-05T09:00:00", catId("Salary"), "Jan Salary")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "2026-01-02T12:00:00", catId("Rent"), "Jan Rent")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 300, CurrencyType.USD, "2026-01-15T18:45:00", catId("Groceries"), "Jan Groceries")))
+
+        // --- MONTH 2: FEBRUARY ---
+        transactionService.income(TransactionCreationParams.Income(TransactionCreationParams.Common(user.id, mainBank.id, 3500, CurrencyType.USD, "2026-02-05T09:00:00", catId("Salary"), "Feb Salary")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "2026-02-02T12:00:00", catId("Rent"), "Feb Rent")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 450, CurrencyType.USD, "2026-02-14T20:00:00", catId("Shopping"), "Valentine's Gifts")))
+
+        // --- MONTH 3: MARCH ---
+        transactionService.income(TransactionCreationParams.Income(TransactionCreationParams.Common(user.id, mainBank.id, 3500, CurrencyType.USD, "2026-03-05T09:00:00", catId("Salary"), "Mar Salary")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "2026-03-02T12:00:00", catId("Rent"), "Mar Rent")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 150, CurrencyType.USD, "2026-03-20T11:30:00", catId("Utilities"), "Heat Bill")))
+
+        // --- MONTH 4: APRIL ---
+        transactionService.income(TransactionCreationParams.Income(TransactionCreationParams.Common(user.id, mainBank.id, 3500, CurrencyType.USD, "2026-04-05T09:00:00", catId("Salary"), "Apr Salary")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "2026-04-02T12:00:00", catId("Rent"), "Apr Rent")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 500, CurrencyType.USD, "2026-04-10T15:00:00", catId("Entertainment"), "Gaming PC Parts")))
+
+        // --- MONTH 5: MAY (CURRENT) ---
+        transactionService.income(TransactionCreationParams.Income(TransactionCreationParams.Common(user.id, mainBank.id, 3500, CurrencyType.USD, "2026-05-05T09:00:00", catId("Salary"), "May Salary")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 1200, CurrencyType.USD, "2026-05-02T12:00:00", catId("Rent"), "May Rent")))
+        transactionService.expense(TransactionCreationParams.Expense(TransactionCreationParams.Common(user.id, mainBank.id, 100, CurrencyType.USD, "2026-05-07T13:15:00", catId("Dining"), "Lunch Out")))
     }
 }

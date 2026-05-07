@@ -9,6 +9,7 @@ import AppDependencies
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
 import app.App
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import utils.TestDataSeeder
 import java.io.File
@@ -22,6 +23,7 @@ fun main() {
         name = dbFile.absolutePath,
     )
         .setDriver(BundledSQLiteDriver()) // KMP Room driver for desktop
+        .setQueryCoroutineContext(Dispatchers.IO)
         .fallbackToDestructiveMigration(dropAllTables = true)
         .build()
 

@@ -11,14 +11,16 @@ import model.enum.CurrencyType
 import models.CategoryAnalyticUiItem
 import models.TimeAnalyticUiItem
 import models.toUiModel
-import repository.CategoryRepository
-import repository.TransactionRepository
 import service.AnalyticsService
+import service.CategoryService
+import service.TransactionService
 import service.analytics.CategoryExpenseStrategy
+import service.analytics.CategoryIncomeStrategy
 import service.analytics.TimeLineStrategy
 
 data class AnalyticsState(
-    val categoryReport: List<CategoryAnalyticUiItem> = emptyList(),
+    val categoryExpenseReport: List<CategoryAnalyticUiItem> = emptyList(),
+    val categoryIncomeReport: List<CategoryAnalyticUiItem> = emptyList(),
     val timeReport: List<TimeAnalyticUiItem> = emptyList(),
     val reportCurrency: CurrencyType = CurrencyType.USD,
     val isLoading: Boolean = true
@@ -26,8 +28,8 @@ data class AnalyticsState(
 
 class AnalyticsScreenModel(
     private val userId: String,
-    private val transactionRepository: TransactionRepository,
-    private val categoryRepository: CategoryRepository,
+    private val transactionService: TransactionService,
+    private val categoryService: CategoryService,
     private val analyticsService: AnalyticsService
 ) : ScreenModel {
 
@@ -37,21 +39,23 @@ class AnalyticsScreenModel(
     init {
         screenModelScope.launch {
             combine(
-                transactionRepository.getAllTransactionsFlow(),
-                categoryRepository.getAllCategoriesFlow()
-            ) { allTrans, allCats ->
-                val userTrans = allTrans.filter { it.base.userId == userId }
+                transactionService.getUserTransactionsFlow(userId),
+                categoryService.getAllCategoriesFlow()
+            ) { userTrans, allCats ->
                 val currentCurrency = _state.value.reportCurrency
 
-                val catStrategy = CategoryExpenseStrategy(allCats)
+                val catExpenseStrategy = CategoryExpenseStrategy(allCats)
+                val catIncomeStrategy = CategoryIncomeStrategy(allCats)
                 val timeStrategy = TimeLineStrategy()
 
                 // get domain models from service
-                val domainCategoryReport = analyticsService.analyze(userTrans, catStrategy, currentCurrency)
+                val domainExpenseReport = analyticsService.analyze(userTrans, catExpenseStrategy, currentCurrency)
+                val domainIncomeReport = analyticsService.analyze(userTrans, catIncomeStrategy, currentCurrency)
                 val domainTimeReport = analyticsService.analyze(userTrans, timeStrategy, currentCurrency)
 
                 AnalyticsState(
-                    categoryReport = domainCategoryReport.map { it.toUiModel(currentCurrency.name) },
+                    categoryExpenseReport = domainExpenseReport.map { it.toUiModel(currentCurrency.name) },
+                    categoryIncomeReport = domainIncomeReport.map { it.toUiModel(currentCurrency.name) },
                     timeReport = domainTimeReport.map { it.toUiModel(currentCurrency.name) },
                     reportCurrency = currentCurrency,
                     isLoading = false

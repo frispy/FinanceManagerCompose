@@ -12,13 +12,13 @@ import models.AccountUiModel
 import models.CategoryUiModel
 import models.TransactionUiModel
 import models.toUiModel
-import repository.AccountRepository
-import repository.CategoryRepository
-import repository.TransactionRepository
+import service.AccountService
+import service.CategoryService
+import service.TransactionService
 
 data class DashboardState(
     val isLoading: Boolean = true,
-    val topAccounts: List<AccountUiModel> = emptyList(),
+    val accounts: List<AccountUiModel> = emptyList(),
     val recentTransactions: List<TransactionUiModel> = emptyList(),
     val activeCategories: List<CategoryUiModel> = emptyList(),
     val currentDateTime: String = ""
@@ -26,9 +26,9 @@ data class DashboardState(
 
 class DashboardScreenModel(
     private val userId: String,
-    private val accountRepository: AccountRepository,
-    private val transactionRepository: TransactionRepository,
-    private val categoryRepository: CategoryRepository
+    private val accountService: AccountService,
+    private val transactionService: TransactionService,
+    private val categoryService: CategoryService
 ) : ScreenModel {
 
     private val _state = MutableStateFlow(DashboardState())
@@ -46,7 +46,6 @@ class DashboardScreenModel(
                 val rawTime = kotlin.time.Clock.System.now().toString()
                 // strips milliseconds and replaces the "T" divider with a standard space
                 val formattedTime = rawTime.substringBefore(".").replace("T", " ")
-
                 _state.update { it.copy(currentDateTime = formattedTime) }
                 delay(1000)
             }
@@ -57,10 +56,10 @@ class DashboardScreenModel(
         screenModelScope.launch {
             // observing flows allows real-time ui updates when db changes
             launch {
-                accountRepository.getAllAccountsFlow().collect { allAccs ->
+                accountService.getUserAccountsFlow(userId).collect { userAccs ->
                     _state.update {
                         it.copy(
-                            topAccounts = allAccs.filter { acc -> acc.userId == userId }.take(3).map { acc -> acc.toUiModel() },
+                            accounts = userAccs.map { acc -> acc.toUiModel() }, // Load all accounts to allow scrolling
                             isLoading = false
                         )
                     }
@@ -68,19 +67,20 @@ class DashboardScreenModel(
             }
             launch {
                 combine(
-                    transactionRepository.getAllTransactionsFlow(),
-                    categoryRepository.getAllCategoriesFlow()
-                ) { allTrans, allCats ->
-                    allTrans.filter { tr -> tr.base.userId == userId }
-                        .take(5)
+                    transactionService.getUserTransactionsFlow(userId),
+                    categoryService.getAllCategoriesFlow()
+                ) { userTrans, allCats ->
+                    userTrans
+                        .sortedByDescending { it.base.date }
+                        .take(20)
                         .map { tr -> tr.toUiModel(allCats) }
                 }.collect { mappedTrans ->
                     _state.update { it.copy(recentTransactions = mappedTrans) }
                 }
             }
             launch {
-                categoryRepository.getAllCategoriesFlow().collect { allCats ->
-                    _state.update { it.copy(activeCategories = allCats.take(6).map { cat -> cat.toUiModel() }) }
+                categoryService.getAllCategoriesFlow().collect { allCats ->
+                    _state.update { it.copy(activeCategories = allCats.take(20).map { cat -> cat.toUiModel() }) }
                 }
             }
         }

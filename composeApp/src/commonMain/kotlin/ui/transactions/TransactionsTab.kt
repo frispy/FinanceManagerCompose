@@ -36,9 +36,8 @@ object TransactionsTab : Tab {
         val screenModel = rememberScreenModel {
             TransactionsScreenModel(
                 user.id,
-                AppDependencies.transactionRepository,
-                AppDependencies.categoryRepository,
-                AppDependencies.transactionService
+                AppDependencies.transactionService,
+                AppDependencies.categoryService
             )
         }
         val state by screenModel.state.collectAsState()

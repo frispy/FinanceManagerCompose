@@ -10,7 +10,6 @@ import model.account.BankAccount
 import model.account.CashAccount
 import model.account.DepositAccount
 import model.enum.AccountType
-import repository.AccountRepository
 import service.AccountService
 
 data class EditAccountState(
@@ -27,7 +26,6 @@ data class EditAccountState(
 
 class EditAccountScreenModel(
     private val accountId: String,
-    private val accountRepository: AccountRepository,
     private val accountService: AccountService
 ) : ScreenModel {
 
@@ -36,7 +34,7 @@ class EditAccountScreenModel(
 
     init {
         screenModelScope.launch {
-            val acc = accountRepository.getById(accountId)
+            val acc = accountService.getAccountById(accountId)
             if (acc != null) {
                 _state.update {
                     it.copy(
@@ -66,7 +64,7 @@ class EditAccountScreenModel(
     fun updateAccount(onSuccess: () -> Unit) {
         screenModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val acc = accountRepository.getById(accountId)
+            val acc = accountService.getAccountById(accountId)
             if (acc == null) {
                 _state.update { it.copy(isLoading = false, error = "account not found") }
                 return@launch

@@ -110,12 +110,12 @@ class CreateAccountScreen(private val userId: String) : Screen {
                             colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                         )
 
-                        // simple currency selector emulation
+                        // simple currency selector
                         Button(
                             onClick = {
-                                // toggle currency logically for demo
-                                val next = if (state.currency == CurrencyType.USD) CurrencyType.EUR else CurrencyType.USD
-                                screenModel.onCurrencyChange(next)
+                                val allCurrencies = CurrencyType.values()
+                                val nextIndex = (state.currency.ordinal + 1) % allCurrencies.size
+                                screenModel.onCurrencyChange(allCurrencies[nextIndex])
                             },
                             modifier = Modifier.weight(1f).height(56.dp).align(Alignment.Bottom),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
@@ -178,7 +178,7 @@ class CreateAccountScreen(private val userId: String) : Screen {
                     Button(
                         onClick = {
                             screenModel.saveAccount {
-                                navigator.pop() // return to accounts tab on success
+                                navigator.pop()
                             }
                         },
                         modifier = Modifier.fillMaxWidth().height(45.dp),

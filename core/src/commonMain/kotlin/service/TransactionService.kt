@@ -1,6 +1,8 @@
 package service
 
 import factory.TransactionFactory
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import model.params.TransactionCreationParams
 import model.transaction.Transaction
 import repository.TransactionRepository
@@ -13,6 +15,20 @@ class TransactionService(
     private val transactionFactory: TransactionFactory,
     private val currencyExchange: CurrencyExchangeService
 ) {
+
+    fun getUserTransactionsFlow(userId: String): Flow<List<Transaction>> {
+        return transactionRepository.getAllTransactionsFlow().map { list ->
+            list.filter { it.base.userId == userId }
+        }
+    }
+
+    // get flow of transactions of only specific account
+    fun getAccountTransactionsFlow(accountId: String): Flow<List<Transaction>> {
+        return transactionRepository.getAllTransactionsFlow().map { list ->
+            list.filter { it.accountId == accountId || (it is Transaction.Transfer && it.targetAccountId == accountId) }
+        }
+    }
+
     suspend fun transfer(params: TransactionCreationParams.Transfer): Boolean {
         if (params.common.amount <= 0) return false
         return try {

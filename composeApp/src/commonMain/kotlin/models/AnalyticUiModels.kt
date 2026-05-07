@@ -12,5 +12,7 @@ data class CategoryAnalyticUiItem(
 data class TimeAnalyticUiItem(
     val periodLabel: String,
     val displayIncome: String,
-    val displayExpense: String     
+    val displayExpense: String,
+    val rawIncome: Long,
+    val rawExpense: Long     
 )

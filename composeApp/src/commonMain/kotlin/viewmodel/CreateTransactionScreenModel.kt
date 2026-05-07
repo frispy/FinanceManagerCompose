@@ -12,8 +12,8 @@ import model.params.TransactionCreationParams
 import models.AccountUiModel
 import models.CategoryUiModel
 import models.toUiModel
-import repository.AccountRepository
-import repository.CategoryRepository
+import service.AccountService
+import service.CategoryService
 import service.TransactionService
 
 data class CreateTransactionState(
@@ -32,8 +32,8 @@ data class CreateTransactionState(
 
 class CreateTransactionScreenModel(
     private val userId: String,
-    private val accountRepository: AccountRepository,
-    private val categoryRepository: CategoryRepository,
+    private val accountService: AccountService,
+    private val categoryService: CategoryService,
     private val transactionService: TransactionService
 ) : ScreenModel {
 
@@ -43,8 +43,8 @@ class CreateTransactionScreenModel(
     init {
         screenModelScope.launch {
             launch {
-                accountRepository.getAllAccountsFlow().collect { accounts ->
-                    val userAccounts = accounts.filter { it.userId == userId }.map { it.toUiModel() }
+                accountService.getUserAccountsFlow(userId).collect { accounts ->
+                    val userAccounts = accounts.map { it.toUiModel() }
                     _state.update {
                         it.copy(
                             availableAccounts = userAccounts,
@@ -54,7 +54,7 @@ class CreateTransactionScreenModel(
                 }
             }
             launch {
-                categoryRepository.getAllCategoriesFlow().collect { categories ->
+                categoryService.getAllCategoriesFlow().collect { categories ->
                     val uiCats = categories.map { it.toUiModel() }
                     _state.update {
                         it.copy(

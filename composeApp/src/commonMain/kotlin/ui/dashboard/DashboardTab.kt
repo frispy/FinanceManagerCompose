@@ -3,6 +3,7 @@ package ui.dashboard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,12 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import models.AccountUiModel
 import models.TransactionUiModel
-import ui.accounts.AccountsTab
+import ui.accounts.AccountDetailsScreen
 import ui.transactions.TransactionsTab
 import ui.theme.LocalCurrentUser
 import viewmodel.DashboardScreenModel
@@ -35,13 +37,14 @@ object DashboardTab : Tab {
     @Composable
     override fun Content() {
         val tabNavigator = LocalTabNavigator.current
+        val rootNavigator = LocalNavigator.current?.parent
         val user = LocalCurrentUser.current
         val screenModel = rememberScreenModel {
             DashboardScreenModel(
                 userId = user.id,
-                accountRepository = AppDependencies.accountRepository,
-                transactionRepository = AppDependencies.transactionRepository,
-                categoryRepository = AppDependencies.categoryRepository
+                accountService = AppDependencies.accountService,
+                transactionService = AppDependencies.transactionService,
+                categoryService = AppDependencies.categoryService
             )
         }
         val state by screenModel.state.collectAsState()
@@ -70,15 +73,19 @@ object DashboardTab : Tab {
             Text("My Accounts", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                if (state.topAccounts.isEmpty()) {
-                    Text("No accounts yet. Create one!", color = Color.Gray)
+            // Migrated from fixed Row to LazyRow to allow smooth horizontal scrolling of all accounts
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                if (state.accounts.isEmpty()) {
+                    item { Text("No accounts yet. Create one!", color = Color.Gray) }
                 } else {
-                    state.topAccounts.forEach { account ->
+                    items(state.accounts) { account ->
                         AccountCard(
                             account = account,
-                            modifier = Modifier.weight(1f),
-                            onClick = { tabNavigator.current = AccountsTab }
+                            modifier = Modifier.width(300.dp), // Fixed width to respect Row behavior
+                            onClick = { rootNavigator?.push(AccountDetailsScreen(account.id)) }
                         )
                     }
                 }

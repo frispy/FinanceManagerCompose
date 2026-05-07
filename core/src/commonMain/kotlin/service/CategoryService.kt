@@ -36,7 +36,7 @@ class CategoryService(
     }
 
     // fetch all stored categories
-    suspend fun getAllCategories(): Flow<List<TransactionCategory>> {
+    fun getAllCategoriesFlow(): Flow<List<TransactionCategory>> {
         return categoryRepository.getAllCategoriesFlow()
     }
 

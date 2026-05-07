@@ -2,10 +2,10 @@ package ui.transactions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,14 +28,15 @@ import viewmodel.CreateTransactionScreenModel
 
 class CreateTransactionScreen(private val userId: String) : Screen {
 
+    @OptIn(ExperimentalLayoutApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val screenModel = rememberScreenModel {
             CreateTransactionScreenModel(
                 userId,
-                AppDependencies.accountRepository,
-                AppDependencies.categoryRepository,
+                AppDependencies.accountService,
+                AppDependencies.categoryService,
                 AppDependencies.transactionService
             )
         }
@@ -46,12 +47,12 @@ class CreateTransactionScreen(private val userId: String) : Screen {
             contentAlignment = Alignment.Center
         ) {
             Card(
-                modifier = Modifier.width(500.dp).padding(16.dp),
+                modifier = Modifier.width(500.dp).padding(16.dp).heightIn(max = 800.dp),
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = MaterialTheme.colors.surface,
                 elevation = 0.dp
             ) {
-                Column(modifier = Modifier.padding(32.dp)) {
+                Column(modifier = Modifier.padding(32.dp).verticalScroll(rememberScrollState())) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(Icons.Default.ArrowBack, contentDescription = "back")
@@ -85,10 +86,12 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.White)
                         )
+
                         Button(
                             onClick = {
-                                val next = if (state.selectedCurrency == CurrencyType.USD) CurrencyType.EUR else CurrencyType.USD
-                                screenModel.onCurrencyChange(next)
+                                val allCurrencies = CurrencyType.values()
+                                val nextIndex = (state.selectedCurrency.ordinal + 1) % allCurrencies.size
+                                screenModel.onCurrencyChange(allCurrencies[nextIndex])
                             },
                             modifier = Modifier.weight(1f).height(56.dp).align(Alignment.Bottom),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
@@ -110,11 +113,15 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text("Source Account", style = MaterialTheme.typography.caption)
-                    LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(state.availableAccounts) { acc ->
+                    Spacer(modifier = Modifier.height(8.dp))
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        state.availableAccounts.forEach { acc ->
                             Button(
                                 onClick = { screenModel.onAccountChange(acc.id) },
-                                modifier = Modifier.padding(vertical = 4.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = if (state.selectedAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                 )
@@ -125,11 +132,15 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     if (state.selectedType == TransactionType.TRANSFER) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Target Account", style = MaterialTheme.typography.caption)
-                        LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            items(state.availableAccounts) { acc ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            state.availableAccounts.forEach { acc ->
                                 Button(
                                     onClick = { screenModel.onTargetAccountChange(acc.id) },
-                                    modifier = Modifier.padding(vertical = 4.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = if (state.selectedTargetAccountId == acc.id) MaterialTheme.colors.primary else Color.LightGray
                                     )
@@ -139,15 +150,19 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                     } else {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Category", style = MaterialTheme.typography.caption)
+                        Spacer(modifier = Modifier.height(8.dp))
                         val filteredCats = state.availableCategories.filter { it.type == state.selectedType }
                         if (filteredCats.isEmpty()) {
                             Text("No categories for this type.", color = Color.Gray)
                         } else {
-                            LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                items(filteredCats) { cat ->
+                            FlowRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                filteredCats.forEach { cat ->
                                     Button(
                                         onClick = { screenModel.onCategoryChange(cat.id) },
-                                        modifier = Modifier.padding(vertical = 4.dp),
                                         colors = ButtonDefaults.buttonColors(
                                             backgroundColor = if (state.selectedCategoryId == cat.id) MaterialTheme.colors.primary else Color.LightGray
                                         )
@@ -157,7 +172,8 @@ class CreateTransactionScreen(private val userId: String) : Screen {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     if (state.error != null) {
                         Text(state.error!!, color = MaterialTheme.colors.error)
                         Spacer(modifier = Modifier.height(8.dp))

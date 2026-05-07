@@ -1,5 +1,7 @@
 package ui.accounts
 
+import AppDependencies
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,12 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import models.AccountUiModel
-import ui.transactions.TransactionsTab
+import models.TransactionUiModel
 import ui.theme.LocalCurrentUser
+import viewmodel.AccountWithHistory
 import viewmodel.AccountsScreenModel
 
 object AccountsTab : Tab {
@@ -32,10 +33,14 @@ object AccountsTab : Tab {
     @Composable
     override fun Content() {
         val rootNavigator = LocalNavigator.current?.parent
-        val tabNavigator = LocalTabNavigator.current
         val user = LocalCurrentUser.current
         val screenModel = rememberScreenModel {
-            AccountsScreenModel(user.id, AppDependencies.accountRepository)
+            AccountsScreenModel(
+                user.id,
+                AppDependencies.accountService,
+                AppDependencies.transactionService,
+                AppDependencies.categoryService
+            )
         }
         val state by screenModel.state.collectAsState()
 
@@ -68,11 +73,11 @@ object AccountsTab : Tab {
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(state.accounts) { account ->
+                    items(state.accounts) { item ->
                         DetailedAccountCard(
-                            account = account,
-                            onEditClick = { rootNavigator?.push(EditAccountScreen(account.id)) },
-                            onHistoryClick = { tabNavigator.current = TransactionsTab }
+                            item = item,
+                            onEditClick = { rootNavigator?.push(EditAccountScreen(item.account.id)) },
+                            onHistoryClick = { rootNavigator?.push(AccountDetailsScreen(item.account.id)) }
                         )
                     }
                 }
@@ -81,7 +86,9 @@ object AccountsTab : Tab {
     }
 
     @Composable
-    fun DetailedAccountCard(account: AccountUiModel, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
+    fun DetailedAccountCard(item: AccountWithHistory, onEditClick: () -> Unit, onHistoryClick: () -> Unit) {
+        val account = item.account
+
         Card(
             modifier = Modifier.fillMaxWidth().height(400.dp),
             backgroundColor = MaterialTheme.colors.surface,
@@ -99,11 +106,17 @@ object AccountsTab : Tab {
                 Text(account.note.ifBlank { "No specific notes provided." }, color = Color.Gray, style = MaterialTheme.typography.body2)
 
                 Spacer(modifier = Modifier.height(24.dp))
-                Text("Transactions", fontWeight = FontWeight.Bold)
+                Text("Recent Transactions", fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("No local history available yet.", color = Color.Gray)
+                    if (item.recentTransactions.isEmpty()) {
+                        Text("No local history available.", color = Color.Gray)
+                    } else {
+                        item.recentTransactions.forEach { tx ->
+                            MiniTransactionRow(tx)
+                        }
+                    }
                 }
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -119,6 +132,32 @@ object AccountsTab : Tab {
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    fun MiniTransactionRow(tx: TransactionUiModel) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier.size(24.dp).background(Color.White, RoundedCornerShape(4.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(ui.utils.IconMapper.getIconByName(tx.iconName), contentDescription = null, tint = MaterialTheme.colors.primary, modifier = Modifier.size(16.dp))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(tx.note, style = MaterialTheme.typography.body2, fontWeight = FontWeight.SemiBold)
+            }
+            Text(
+                text = tx.displayAmount,
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.Bold,
+                color = if (tx.isExpense) Color.Black else Color(0xFF4CAF50)
+            )
         }
     }
 }

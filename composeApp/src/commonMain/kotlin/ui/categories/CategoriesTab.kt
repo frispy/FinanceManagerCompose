@@ -35,7 +35,7 @@ object CategoriesTab : Tab {
     @Composable
     override fun Content() {
         val screenModel = rememberScreenModel {
-            CategoriesScreenModel(AppDependencies.categoryService, AppDependencies.categoryRepository)
+            CategoriesScreenModel(AppDependencies.categoryService)
         }
         val state by screenModel.state.collectAsState()
 

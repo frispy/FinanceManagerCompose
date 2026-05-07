@@ -10,8 +10,7 @@ import kotlinx.coroutines.launch
 import models.CategoryUiModel
 import models.TransactionUiModel
 import models.toUiModel
-import repository.CategoryRepository
-import repository.TransactionRepository
+import service.CategoryService
 import service.TransactionService
 
 data class TransactionsState(
@@ -21,9 +20,8 @@ data class TransactionsState(
 
 class TransactionsScreenModel(
     private val userId: String,
-    private val transactionRepository: TransactionRepository,
-    private val categoryRepository: CategoryRepository,
-    private val transactionService: TransactionService
+    private val transactionService: TransactionService,
+    private val categoryService: CategoryService
 ) : ScreenModel {
     private val _state = MutableStateFlow(TransactionsState())
     val state = _state.asStateFlow()
@@ -32,16 +30,16 @@ class TransactionsScreenModel(
         screenModelScope.launch {
             launch {
                 combine(
-                    transactionRepository.getAllTransactionsFlow(),
-                    categoryRepository.getAllCategoriesFlow()
+                    transactionService.getUserTransactionsFlow(userId),
+                    categoryService.getAllCategoriesFlow()
                 ) { trans, cats ->
-                    trans.filter { tr -> tr.base.userId == userId }.map { it.toUiModel(cats) }
+                    trans.map { it.toUiModel(cats) }
                 }.collect { mappedTrans ->
                     _state.update { it.copy(transactions = mappedTrans) }
                 }
             }
             launch {
-                categoryRepository.getAllCategoriesFlow().collect { list ->
+                categoryService.getAllCategoriesFlow().collect { list ->
                     _state.update { it.copy(categories = list.map { it.toUiModel() }) }
                 }
             }

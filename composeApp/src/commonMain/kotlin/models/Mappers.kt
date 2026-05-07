@@ -69,6 +69,8 @@ fun TimeAnalyticItem.toUiModel(currencyCode: String): TimeAnalyticUiItem {
     return TimeAnalyticUiItem(
         periodLabel = this.periodLabel,
         displayIncome = "+ ${this.totalIncome} $currencyCode",
-        displayExpense = "- ${this.totalExpense} $currencyCode"
+        displayExpense = "- ${this.totalExpense} $currencyCode",
+        rawIncome = this.totalIncome,
+        rawExpense = this.totalExpense
     )
 }

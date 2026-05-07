@@ -29,7 +29,7 @@ class EditAccountScreen(private val accountId: String) : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val screenModel = rememberScreenModel {
-            EditAccountScreenModel(accountId, AppDependencies.accountRepository, AppDependencies.accountService)
+            EditAccountScreenModel(accountId, AppDependencies.accountService)
         }
         val state by screenModel.state.collectAsState()
 

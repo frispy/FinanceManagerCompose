@@ -22,7 +22,7 @@ class TransactionFactory(
             accountId = c.accountId,
             amount = c.amount,
             currency = c.currency,
-            date = clock.now().toString(),
+            date = c.date.ifBlank { clock.now().toString() },
             categoryId = c.categoryId,
             note = c.note
         )

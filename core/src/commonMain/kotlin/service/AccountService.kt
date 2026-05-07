@@ -61,6 +61,11 @@ class AccountService (
         return true
     }
 
+    fun getUserAccountsFlow(userId: String): Flow<List<Account>> {
+        return accountRepository.getAllAccountsFlow().map { list ->
+            list.filter { it.userId == userId }
+        }
+    }
     suspend fun deleteAccount(accountId: String) {
         accountRepository.delete(accountId)
     }

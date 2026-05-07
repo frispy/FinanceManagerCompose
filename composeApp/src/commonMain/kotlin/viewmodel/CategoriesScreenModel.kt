@@ -10,7 +10,6 @@ import model.enum.TransactionType
 import model.transaction.TransactionCategory
 import models.CategoryUiModel
 import models.toUiModel
-import repository.CategoryRepository
 import service.CategoryService
 
 data class CategoriesState(
@@ -22,8 +21,7 @@ data class CategoriesState(
 )
 
 class CategoriesScreenModel(
-    private val categoryService: CategoryService,
-    private val categoryRepository: CategoryRepository
+    private val categoryService: CategoryService
 ) : ScreenModel {
 
     private val _state = MutableStateFlow(CategoriesState())
@@ -31,7 +29,7 @@ class CategoriesScreenModel(
 
     init {
         screenModelScope.launch {
-            categoryRepository.getAllCategoriesFlow().collect { list ->
+            categoryService.getAllCategoriesFlow().collect { list ->
                 _state.update { it.copy(categories = list.map { cat -> cat.toUiModel() }) }
             }
         }
@@ -69,7 +67,6 @@ class CategoriesScreenModel(
 
         screenModelScope.launch {
             if (currentState.editingCategoryId != null) {
-                // update existing
                 val updatedCategory = TransactionCategory(
                     id = currentState.editingCategoryId,
                     name = currentState.newCategoryName,
@@ -78,14 +75,12 @@ class CategoriesScreenModel(
                 )
                 categoryService.updateCategory(updatedCategory)
             } else {
-                // create new
                 categoryService.createCategory(
                     name = currentState.newCategoryName,
                     type = currentState.newCategoryType,
                     iconName = currentState.newCategoryIcon
                 )
             }
-            // reset form
             cancelEditing()
         }
     }
