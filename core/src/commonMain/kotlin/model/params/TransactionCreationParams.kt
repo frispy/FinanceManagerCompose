@@ -22,4 +22,5 @@ sealed class TransactionCreationParams {
         val common: Common,
         val targetAccountId: String
     ) : TransactionCreationParams()
+
 }

@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.map
 import model.params.TransactionCreationParams
 import model.transaction.Transaction
 import repository.TransactionRepository
-import repository.UnitOfWork
+import repository.TransactionRunner
 
 class TransactionService(
-    private val unitOfWork: UnitOfWork,
+    private val transactionRunner: TransactionRunner,
     private val transactionRepository: TransactionRepository,
     private val accountService: AccountService,
     private val transactionFactory: TransactionFactory,
@@ -32,7 +32,7 @@ class TransactionService(
     suspend fun transfer(params: TransactionCreationParams.Transfer): Boolean {
         if (params.common.amount <= 0) return false
         return try {
-            unitOfWork.execute {
+            transactionRunner.execute {
                 val sourceCurrency = accountService.getAccountCurrency(params.common.accountId)
                     ?: throw IllegalArgumentException("Source account not found")
                 val targetCurrency = accountService.getAccountCurrency(params.targetAccountId)
@@ -72,7 +72,7 @@ class TransactionService(
         if (params.common.amount <= 0) return false
 
         return try {
-            unitOfWork.execute {
+            transactionRunner.execute {
                 val accountCurrency = accountService.getAccountCurrency(params.common.accountId)
                     ?: throw IllegalArgumentException("Account not found")
 
@@ -101,7 +101,7 @@ class TransactionService(
         if (params.common.amount <= 0) return false
 
         return try {
-            unitOfWork.execute {
+            transactionRunner.execute {
                 val accountCurrency = accountService.getAccountCurrency(params.common.accountId)
                     ?: throw IllegalArgumentException("Account not found")
 
@@ -127,7 +127,7 @@ class TransactionService(
 
     suspend fun deleteTransactionRecord(transactionId: String): Boolean {
         return try {
-            unitOfWork.execute {
+            transactionRunner.execute {
                 val transaction = transactionRepository.getById(transactionId)
                     ?: throw IllegalArgumentException("Transaction not found")
 

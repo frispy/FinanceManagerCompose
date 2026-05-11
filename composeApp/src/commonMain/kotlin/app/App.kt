@@ -13,14 +13,11 @@ import ui.theme.BlueColors
 
 @Composable
 fun App() {
-    // we hold the current theme state here at the very top
+    // hold the current theme state here at the very top
     var isBlueTheme by remember { mutableStateOf(false) }
     val colors = if (isBlueTheme) BlueColors else DefaultGrayColors
 
     MaterialTheme(colors = colors) {
-        // we pass the theme toggle callback down via screen params if needed,
-        // but for voyager it's easier to use a simple static object or pass it via constructor.
-        // here we initialize standard login screen
         Navigator(LoginScreen { newThemeStatus ->
             isBlueTheme = newThemeStatus
         })

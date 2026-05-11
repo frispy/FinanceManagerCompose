@@ -76,7 +76,8 @@ object DashboardTab : Tab {
             // Migrated from fixed Row to LazyRow to allow smooth horizontal scrolling of all accounts
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(horizontal = 4.dp)
             ) {
                 if (state.accounts.isEmpty()) {
                     item { Text("No accounts yet. Create one!", color = Color.Gray) }
@@ -84,7 +85,7 @@ object DashboardTab : Tab {
                     items(state.accounts) { account ->
                         AccountCard(
                             account = account,
-                            modifier = Modifier.width(300.dp), // Fixed width to respect Row behavior
+                            modifier = Modifier.width(300.dp),
                             onClick = { rootNavigator?.push(AccountDetailsScreen(account.id)) }
                         )
                     }

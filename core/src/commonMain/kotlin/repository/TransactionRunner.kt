@@ -5,11 +5,11 @@ import androidx.room.useWriterConnection
 import data.AppDatabase
 
 // generic transaction management
-interface UnitOfWork {
+interface TransactionRunner {
     suspend fun <R> execute(block: suspend () -> R): R
 }
 
-class RoomUnitOfWork(private val database: AppDatabase) : UnitOfWork {
+class RoomTransactionRunner(private val database: AppDatabase) : TransactionRunner {
     override suspend fun <R> execute(block: suspend () -> R): R {
         // NOTE in KMP useWriterConnection instead of Androids withTransaction THATS VERY IMPORTANT FOR FUTURE PROJECTS
         val result = database.useWriterConnection { transactor ->
@@ -18,7 +18,7 @@ class RoomUnitOfWork(private val database: AppDatabase) : UnitOfWork {
             }
         }
 
-        // Manually trigger Room's invalidation tracker so Flows emit the new UI state
+        // make sure that ui reacts on change in db
         database.invalidationTracker.refreshAsync()
 
         return result
