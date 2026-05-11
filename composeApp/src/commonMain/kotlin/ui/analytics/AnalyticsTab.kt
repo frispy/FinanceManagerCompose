@@ -3,26 +3,22 @@ package ui.analytics
 import AppDependencies
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import model.enum.CurrencyType
 import model.enum.TransactionType
 import models.CategoryAnalyticUiItem
 import models.TimeAnalyticUiItem
@@ -43,26 +39,43 @@ object AnalyticsTab : Tab {
                 userId = user.id,
                 transactionService = AppDependencies.transactionService,
                 categoryService = AppDependencies.categoryService,
-                analyticsService = AppDependencies.analyticsService
+                analyticsService = AppDependencies.analyticsService,
+                accountService = AppDependencies.accountService,
+                currencyExchangeService = AppDependencies.currencyExchangeService
             )
         }
         val state by screenModel.state.collectAsState()
 
-        Column(modifier = Modifier.fillMaxSize().padding(32.dp)) {
-            Text(
-                text = "Analytics Insights",
-                style = MaterialTheme.typography.h4,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "Track your financial performance dynamically across ${state.reportCurrency.name}.",
-                color = Color.Gray
-            )
+        Column(modifier = Modifier.fillMaxSize().padding(32.dp).verticalScroll(rememberScrollState())) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text("Analytics Insights", style = MaterialTheme.typography.h4, fontWeight = FontWeight.Bold)
+                    Text("Track your financial performance and activity volume.", color = Color.Gray)
+                }
 
-            Spacer(modifier = Modifier.height(24.dp))
+                // Currency Report Toggle
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    CurrencyType.values().forEach { cType ->
+                        Button(
+                            onClick = { screenModel.setCurrency(cType) },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (state.reportCurrency == cType) MaterialTheme.colors.primary else Color.LightGray
+                            )
+                        ) {
+                            Text(cType.name, color = if (state.reportCurrency == cType) Color.White else Color.Black)
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
 
             if (state.isLoading) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.fillMaxWidth().height(300.dp), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
             } else {
@@ -70,96 +83,118 @@ object AnalyticsTab : Tab {
                 val totalExpense = state.timeReport.sumOf { it.rawExpense }
                 val netCashflow = totalIncome - totalExpense
 
-                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                // top Summary Row
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    SummaryCard("Total Income", "+ $totalIncome ${state.reportCurrency.name}", Color(0xFF4CAF50), Modifier.weight(1f))
+                    SummaryCard("Total Expense", "- $totalExpense ${state.reportCurrency.name}", Color(0xFFE53935), Modifier.weight(1f))
+                    SummaryCard("Net Cashflow", "$netCashflow ${state.reportCurrency.name}", if (netCashflow >= 0) Color.Black else Color.Red, Modifier.weight(1f))
+                }
 
-                    // TOP ROW: Summary & Graph
-                    Row(modifier = Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                        // Summary Card
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // structured Layout
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
+                    // left Column
+                    Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+
                         Card(
-                            modifier = Modifier.weight(0.4f).fillMaxHeight(),
-                            backgroundColor = MaterialTheme.colors.primary,
-                            elevation = 0.dp,
-                            shape = RoundedCornerShape(24.dp)
-                        ) {
-                            Column(modifier = Modifier.padding(24.dp).fillMaxSize(), verticalArrangement = Arrangement.Center) {
-                                Text("Net Cashflow", color = Color.White.copy(alpha = 0.8f))
-                                AnimatedCounterText(value = netCashflow, currency = state.reportCurrency.name, color = Color.White, style = MaterialTheme.typography.h3)
-
-                                Spacer(modifier = Modifier.height(32.dp))
-
-                                Text("Total Income", color = Color.White.copy(alpha = 0.8f))
-                                AnimatedCounterText(value = totalIncome, currency = state.reportCurrency.name, color = Color(0xFF81C784), style = MaterialTheme.typography.h5)
-
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                                Text("Total Expense", color = Color.White.copy(alpha = 0.8f))
-                                AnimatedCounterText(value = totalExpense, currency = state.reportCurrency.name, color = Color(0xFFE57373), style = MaterialTheme.typography.h5)
-                            }
-                        }
-
-                        // Graph Card
-                        Card(
-                            modifier = Modifier.weight(0.6f).fillMaxHeight(),
+                            modifier = Modifier.fillMaxWidth(),
                             backgroundColor = MaterialTheme.colors.surface,
                             elevation = 0.dp,
-                            shape = RoundedCornerShape(24.dp)
+                            shape = RoundedCornerShape(16.dp)
                         ) {
-                            Column(modifier = Modifier.padding(24.dp).fillMaxSize()) {
-                                Text("Cashflow Over Time (Monthly)", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                            Column(modifier = Modifier.padding(24.dp)) {
+                                Text("Monthly Flow", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 if (state.timeReport.isEmpty()) {
-                                    Text("No historical data to graph.", color = Color.Gray)
+                                    Text("No monthly data available.", color = Color.Gray)
                                 } else {
-                                    CashflowBarChart(state.timeReport)
+                                    state.timeReport.forEach { item ->
+                                        MonthlyFlowRow(item, state.reportCurrency.name)
+                                        Divider(color = Color.LightGray.copy(alpha = 0.5f))
+                                    }
+                                }
+                            }
+                        }
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            backgroundColor = MaterialTheme.colors.surface,
+                            elevation = 0.dp,
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(24.dp)) {
+                                Text("Account Activity Volume", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                                Text("Total cash moved across accounts (Income + Expense)", style = MaterialTheme.typography.caption, color = Color.Gray)
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                if (state.accountFlowReport.isEmpty()) {
+                                    Text("No account activity.", color = Color.Gray)
+                                } else {
+                                    state.accountFlowReport.forEachIndexed { index, acc ->
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Text("${index + 1}.", fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
+                                                Spacer(modifier = Modifier.width(8.dp))
+                                                Text(acc.accountName, fontWeight = FontWeight.SemiBold)
+                                            }
+                                            Text(acc.displayFlow, color = Color.Gray, fontWeight = FontWeight.Bold)
+                                        }
+                                        Divider(color = Color.LightGray.copy(alpha = 0.5f))
+                                    }
                                 }
                             }
                         }
                     }
 
-                    // BOTTOM ROW: Categories
-                    Card(
-                        modifier = Modifier.fillMaxWidth().weight(1f),
-                        backgroundColor = MaterialTheme.colors.surface,
-                        elevation = 0.dp,
-                        shape = RoundedCornerShape(24.dp)
-                    ) {
-                        var selectedTab by remember { mutableStateOf(TransactionType.EXPENSE) }
+                    // Right Column
+                    Column(modifier = Modifier.weight(1f)) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            backgroundColor = MaterialTheme.colors.surface,
+                            elevation = 0.dp,
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            var selectedTab by remember { mutableStateOf(TransactionType.EXPENSE) }
 
-                        Column(modifier = Modifier.padding(24.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("Category Breakdown", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
-
-                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    listOf(TransactionType.EXPENSE, TransactionType.INCOME).forEach { type ->
-                                        Button(
-                                            onClick = { selectedTab = type },
-                                            colors = ButtonDefaults.buttonColors(
-                                                backgroundColor = if (selectedTab == type) MaterialTheme.colors.primary else Color.LightGray
-                                            ),
-                                        ) {
-                                            Text(type.name + "S", color = if (selectedTab == type) Color.White else Color.Black)
+                            Column(modifier = Modifier.padding(24.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text("Category Breakdown", style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        listOf(TransactionType.EXPENSE, TransactionType.INCOME).forEach { type ->
+                                            Button(
+                                                onClick = { selectedTab = type },
+                                                colors = ButtonDefaults.buttonColors(
+                                                    backgroundColor = if (selectedTab == type) MaterialTheme.colors.primary else Color.LightGray
+                                                ),
+                                            ) {
+                                                Text(type.name, color = if (selectedTab == type) Color.White else Color.Black)
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            Spacer(modifier = Modifier.height(24.dp))
+                                Spacer(modifier = Modifier.height(24.dp))
 
-                            val reportData = if (selectedTab == TransactionType.EXPENSE) state.categoryExpenseReport else state.categoryIncomeReport
-                            val barColor = if (selectedTab == TransactionType.EXPENSE) Color(0xFFE53935) else Color(0xFF4CAF50)
+                                val reportData = if (selectedTab == TransactionType.EXPENSE) state.categoryExpenseReport else state.categoryIncomeReport
+                                val barColor = if (selectedTab == TransactionType.EXPENSE) Color(0xFFE53935) else Color(0xFF4CAF50)
 
-                            if (reportData.isEmpty()) {
-                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                    Text("No data to breakdown.", color = Color.Gray)
-                                }
-                            } else {
-                                LazyColumn {
-                                    items(reportData) { item ->
+                                if (reportData.isEmpty()) {
+                                    Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+                                        Text("No data to breakdown.", color = Color.Gray)
+                                    }
+                                } else {
+                                    reportData.forEach { item ->
                                         AnimatedCategoryProgressRow(item, barColor)
                                         Spacer(modifier = Modifier.height(16.dp))
                                     }
@@ -173,61 +208,40 @@ object AnalyticsTab : Tab {
     }
 
     @Composable
-    fun AnimatedCounterText(value: Long, currency: String, color: Color, style: androidx.compose.ui.text.TextStyle) {
-        var animationTriggered by remember { mutableStateOf(false) }
-        val animatedValue by animateFloatAsState(
-            targetValue = if (animationTriggered) value.toFloat() else 0f,
-            animationSpec = tween(durationMillis = 1500)
-        )
-
-        LaunchedEffect(Unit) { animationTriggered = true }
-
-        Text("${animatedValue.toLong()} $currency", color = color, style = style, fontWeight = FontWeight.Bold)
+    fun SummaryCard(title: String, value: String, valueColor: Color, modifier: Modifier = Modifier) {
+        Card(
+            modifier = modifier,
+            backgroundColor = MaterialTheme.colors.surface,
+            elevation = 0.dp,
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(title, color = Color.Gray, style = MaterialTheme.typography.subtitle2)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(value, color = valueColor, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold)
+            }
+        }
     }
 
     @Composable
-    fun CashflowBarChart(items: List<TimeAnalyticUiItem>) {
-        val maxAmount = items.maxOf { maxOf(it.rawIncome, it.rawExpense) }.toFloat().coerceAtLeast(1f)
-        var animationTriggered by remember { mutableStateOf(false) }
-        val heightProgress by animateFloatAsState(targetValue = if (animationTriggered) 1f else 0f, animationSpec = tween(1200))
+    fun MonthlyFlowRow(item: TimeAnalyticUiItem, currencyName: String) {
+        val netRaw = item.rawIncome - item.rawExpense
+        val netColor = if (netRaw >= 0) Color(0xFF4CAF50) else Color.Red
+        val sign = if (netRaw >= 0) "+" else ""
 
-        LaunchedEffect(Unit) { animationTriggered = true }
-
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            for (i in 0..4) {
-                val y = size.height * (i / 4f)
-                drawLine(
-                    color = Color.LightGray.copy(alpha = 0.4f),
-                    start = Offset(0f, y),
-                    end = Offset(size.width, y),
-                    strokeWidth = 1f
-                )
-            }
-
-            val availableWidth = size.width
-            val itemWidth = availableWidth / items.size.coerceAtLeast(1)
-            val barWidth = itemWidth * 0.3f
-            var xOffset = itemWidth * 0.2f
-
-            items.forEach { item ->
-                val incomeHeight = (item.rawIncome / maxAmount) * size.height * heightProgress
-                val expenseHeight = (item.rawExpense / maxAmount) * size.height * heightProgress
-
-                drawRoundRect(
-                    color = Color(0xFF4CAF50),
-                    topLeft = Offset(xOffset, size.height - incomeHeight),
-                    size = Size(barWidth, incomeHeight),
-                    cornerRadius = CornerRadius(4.dp.toPx())
-                )
-
-                drawRoundRect(
-                    color = Color(0xFFE53935),
-                    topLeft = Offset(xOffset + barWidth + 2.dp.toPx(), size.height - expenseHeight),
-                    size = Size(barWidth, expenseHeight),
-                    cornerRadius = CornerRadius(4.dp.toPx())
-                )
-
-                xOffset += itemWidth
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(item.periodLabel, fontWeight = FontWeight.Bold)
+            Column(horizontalAlignment = Alignment.End) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("In: ${item.rawIncome}", color = Color(0xFF4CAF50), style = MaterialTheme.typography.caption, fontWeight = FontWeight.SemiBold)
+                    Text("Out: ${item.rawExpense}", color = Color(0xFFE53935), style = MaterialTheme.typography.caption, fontWeight = FontWeight.SemiBold)
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Text("Net: $sign$netRaw $currencyName", color = netColor, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.subtitle2)
             }
         }
     }

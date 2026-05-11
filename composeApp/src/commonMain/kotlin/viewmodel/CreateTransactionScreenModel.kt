@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import model.OperationResult
 import model.enum.CurrencyType
 import model.enum.TransactionType
 import model.params.TransactionCreationParams
@@ -102,17 +103,26 @@ class CreateTransactionScreenModel(
         screenModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
 
-            val success = when (st.selectedType) {
+            val result = when (st.selectedType) {
                 TransactionType.EXPENSE -> transactionService.expense(TransactionCreationParams.Expense(commonParams))
                 TransactionType.INCOME -> transactionService.income(TransactionCreationParams.Income(commonParams))
-                TransactionType.TRANSFER -> transactionService.transfer(TransactionCreationParams.Transfer(commonParams, st.selectedTargetAccountId))
+                TransactionType.TRANSFER -> transactionService.transfer(
+                    TransactionCreationParams.Transfer(
+                        commonParams,
+                        st.selectedTargetAccountId
+                    )
+                )
             }
 
-            if (success) {
-                _state.update { it.copy(isLoading = false) }
-                onSuccess()
-            } else {
-                _state.update { it.copy(isLoading = false, error = "Transaction failed") }
+            when (result) {
+                is OperationResult.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                    onSuccess()
+                }
+
+                is OperationResult.Error -> {
+                    _state.update { it.copy(isLoading = false, error = result.message) }
+                }
             }
         }
     }

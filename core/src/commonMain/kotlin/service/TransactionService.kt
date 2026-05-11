@@ -3,6 +3,7 @@ package service
 import factory.TransactionFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import model.OperationResult
 import model.params.TransactionCreationParams
 import model.transaction.Transaction
 import repository.TransactionRepository
@@ -29,8 +30,9 @@ class TransactionService(
         }
     }
 
-    suspend fun transfer(params: TransactionCreationParams.Transfer): Boolean {
-        if (params.common.amount <= 0) return false
+    suspend fun transfer(params: TransactionCreationParams.Transfer): OperationResult<Unit> {
+        if (params.common.amount <= 0) return OperationResult.Error("Amount must be greater than zero.")
+
         return try {
             transactionRunner.execute {
                 val sourceCurrency = accountService.getAccountCurrency(params.common.accountId)
@@ -50,26 +52,25 @@ class TransactionService(
                     to = targetCurrency
                 )
 
-                // if any of these fail, an exception is thrown to trigger the unit of work rollback
                 if (!accountService.withdraw(params.common.accountId, amountToWithdraw)) {
-                    throw IllegalStateException("Failed to withdraw from source")
+                    throw IllegalStateException("Failed to withdraw from source due to insufficient funds.")
                 }
 
                 if (!accountService.deposit(params.targetAccountId, amountToDeposit)) {
-                    throw IllegalStateException("Failed to deposit to target")
+                    throw IllegalStateException("Failed to deposit to target account.")
                 }
 
                 val transferRecord = transactionFactory.create(params)
                 transactionRepository.add(transferRecord)
             }
-            true
+            OperationResult.Success(Unit)
         } catch (e: Exception) {
-            false
+            OperationResult.Error(e.message ?: "An unexpected error occurred during transfer.")
         }
     }
 
-    suspend fun income(params: TransactionCreationParams.Income): Boolean {
-        if (params.common.amount <= 0) return false
+    suspend fun income(params: TransactionCreationParams.Income): OperationResult<Unit> {
+        if (params.common.amount <= 0) return OperationResult.Error("Amount must be greater than zero.")
 
         return try {
             transactionRunner.execute {
@@ -91,14 +92,14 @@ class TransactionService(
                 val incomeRecord = transactionFactory.create(params)
                 transactionRepository.add(incomeRecord)
             }
-            true
+            OperationResult.Success(Unit)
         } catch (e: Exception) {
-            false
+            OperationResult.Error(e.message ?: "An unexpected error occurred during transfer.")
         }
     }
 
-    suspend fun expense(params: TransactionCreationParams.Expense): Boolean {
-        if (params.common.amount <= 0) return false
+    suspend fun expense(params: TransactionCreationParams.Expense): OperationResult<Unit> {
+        if (params.common.amount <= 0) return OperationResult.Error("Amount must be greater than zero.")
 
         return try {
             transactionRunner.execute {
@@ -119,13 +120,13 @@ class TransactionService(
                 val expenseRecord = transactionFactory.create(params)
                 transactionRepository.add(expenseRecord)
             }
-            true
+            OperationResult.Success(Unit)
         } catch (e: Exception) {
-            false
+            OperationResult.Error(e.message ?: "An unexpected error occurred during transfer.")
         }
     }
 
-    suspend fun deleteTransactionRecord(transactionId: String): Boolean {
+    suspend fun deleteTransactionRecord(transactionId: String): OperationResult<Unit> {
         return try {
             transactionRunner.execute {
                 val transaction = transactionRepository.getById(transactionId)
@@ -141,9 +142,9 @@ class TransactionService(
                 // remove the record
                 transactionRepository.delete(transactionId)
             }
-            true
+            OperationResult.Success(Unit)
         } catch (e: Exception) {
-            false
+            OperationResult.Error(e.message ?: "An unexpected error occurred during transfer.")
         }
     }
 
