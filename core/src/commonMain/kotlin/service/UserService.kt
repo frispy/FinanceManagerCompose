@@ -11,6 +11,7 @@ class UserService(
     private val userFactory: GenericFactory<User, UserCreationParams>,
 ){
     suspend fun register(params: UserCreationParams): Boolean {
+        // user already exists
         if (userRepository.findByLogin(params.login) != null) {
             return false
         }
